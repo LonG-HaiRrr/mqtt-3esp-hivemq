@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Điều khiển LED ESP8266 MQTT</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Thư viện MQTT.js -->
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+</head>
+<body class="dark-mode">
+
+<header class="thanh_header"> 
+<div class="header_trai">
+
+<div class="menu-container" tabindex="0">
+  <i class="fa-solid fa-house icon_home fa-lg"></i>
+  <div class="dropdown-menu">
+    <a href="https://fontawesome.com/icons/github?f=brands&s=solid" target="_blank">Menu 1</a>
+    <a href="https://fontawesome.com/icons/github?f=brands&s=solid" target="_blank">Menu 2</a>
+    <a href="https://fontawesome.com/icons/github?f=brands&s=solid" target="_blank">Menu 3</a>
+  </div>
+
+</div>
+
+
+
+
+</div>
+
+<div class="header_phai">
+<div class="toggle-visual" id="theme-toggle-visual" title="Đổi giao diện">
+  <label class="toggle" id="toggleContainer">
+    <input type="checkbox" class="toggle-checkbox" id="toggle-theme-checkbox">
+    <div class="toggle-inner">
+      <div class="toggle-bg-night"></div>
+      <div class="toggle-bg-day"></div>
+      <div class="toggle-label-text day-label"><i class="fas fa-sun"></i></div>
+      <div class="toggle-label-text night-label"><i class="fas fa-moon"></i></div>
+      <div class="toggle-btn-slider" id="toggleBtn"></div>
+    </div>
+  </label>
+</div>
+<div class="callme">
+  <i class="fa-solid fa-phone fa-lg"></i>
+</div>
+  <div class="infor_container">
+  <i class="fa-solid fa-circle-info fa-xl"></i>
+  <div id="ts-info">
+    <div><span class="ts-info-label">Giao thức:</span> <span class="ts-info-value">MQTT (HiveMQ)</span></div>
+    <div><span class="ts-info-label">Thời gian:</span> <span class="ts-info-value" id="mqtt-time">--</span></div>
+    <div><span class="ts-info-label">Trạng thái MQTT:</span> <span class="ts-info-value" id="mqtt-status">--</span></div>
+    <a href="https://fontawesome.com/icons/github?f=brands&s=solid">Menu 3</a>
+  </div>
+</div>
+
+a
+
+</div>
+
+
+
+</header>
+
+
+
+
+<h2 id="ahihi">ESP8266 + MQTT HiveMQ</h2>
+<button id="btn1" class="btn btn-bat" onclick="toggleButton(0)">BẬT LED 1</button>
+<button id="btn2" class="btn btn-bat" onclick="toggleButton(1)">BẬT LED 2</button>
+<button id="btn3" class="btn btn-bat" onclick="toggleButton(2)">BẬT LED 3</button>
+<div id="states">
+  <span class="span_trang_thai"><span class="led-label">LED 1:</span><span id="state1" class="state-indicator off">OFF</span></span>
+  <span class="span_trang_thai"><span class="led-label">LED 2:</span><span id="state2" class="state-indicator off">OFF</span></span>
+  <span class="span_trang_thai"><span class="led-label">LED 3:</span><span id="state3" class="state-indicator off">OFF</span></span>
+</div>
+
+<div class="zone_esp2">
+<button id="btn4" class="btn btn-bat" onclick="toggleButton(3)">BẬT LED 4</button>
+<button id="btn5" class="btn btn-bat" onclick="toggleButton(4)">BẬT LED 5</button>
+<button id="btn6" class="btn btn-bat" onclick="toggleButton(5)">BẬT LED 6</button>
+<!-- Hiển thị trạng thái LED 4, 5, 6 -->
+<span class="span_trang_thai"><span class="led-label">LED 4:</span><span id="state4" class="state-indicator off">OFF</span></span>
+<span class="span_trang_thai"><span class="led-label">LED 5:</span><span id="state5" class="state-indicator off">OFF</span></span>
+<span class="span_trang_thai"><span class="led-label">LED 6:</span><span id="state6" class="state-indicator off">OFF</span></span>
+<!-- Nút điều khiển LED 4, 5, 6 -->
+</div>
+
+<div class="zone_esp3">
+<button id="btn7" class="btn btn-bat" onclick="toggleButton(6)">BẬT LED 7</button>
+<button id="btn8" class="btn btn-bat" onclick="toggleButton(7)">BẬT LED 8</button>
+<button id="btn9" class="btn btn-bat" onclick="toggleButton(8)">BẬT LED 9</button>
+<span class="span_trang_thai"><span class="led-label">LED 7:</span><span id="state7" class="state-indicator off">OFF</span></span>
+<span class="span_trang_thai"><span class="led-label">LED 8:</span><span id="state8" class="state-indicator off">OFF</span></span>
+<span class="span_trang_thai"><span class="led-label">LED 9:</span><span id="state9" class="state-indicator off">OFF</span></span>
+</div>
+
+
+
+<div id="adc-visual-block" class="adc-visual-row" style="margin-top:0px;">
+  <canvas id="adcLineChart" width="500" height="250"></canvas>
+  <div class="adcGauge-container">
+    <canvas id="adcGauge" width="220" height="220"></canvas>
+    <div class="adcGaugeValue">giá trị adc: <b><span id="adcGaugeValue">--</span></b></div>
+  </div>
+</div>
+
+
+    <div class="adcGaugeValue">giá trị adc2: <b><span id="adcGaugeValue2">--</span></b></div>
+    <div class="adcGaugeValue">giá trị adc3: <b><span id="adcGaugeValue3">--</span></b></div>
+
+
+<div id="note-block" style="padding-top:30px; padding-bottom:0px;">
+  <b>Lịch sử nút nhấn ESP1:</b>
+  <table id="button-history-esp1" style="margin:8px auto;background:#222;color:#fff;border-radius:8px"></table>
+  <b>Lịch sử nút nhấn ESP2:</b>
+  <table id="button-history-esp2" style="margin:8px auto;background:#222;color:#fff;border-radius:8px"></table>
+  <b>Lịch sử nút nhấn ESP3:</b>
+  <table id="button-history-esp3" style="margin:8px auto;background:#222;color:#fff;border-radius:8px"></table>
+</div>
+
+
+<script src="main.js"></script>
+</body>
+</html>
