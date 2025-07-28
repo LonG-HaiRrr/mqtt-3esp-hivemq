@@ -82,7 +82,7 @@ void loop() {
   client.loop();
 
   static unsigned long t = 0;
-  if (millis() - t > 2000) {
+  if (millis() - t > 50) {
     t = millis();
     StaticJsonDocument<128> doc;
     JsonArray arr = doc.createNestedArray("leds");
@@ -97,7 +97,7 @@ void loop() {
   }
 
   // Xử lý nút nhấn vật lý, gửi sự kiện MQtt
-  static unsigned long lastDebounce = 0;
+  static unsigned long lastDebounce = 0;  
   bool btnState = digitalRead(BUTTON_PIN);
   if (btnState == HIGH && lastBtnState == LOW && millis() - lastDebounce > 200) {
     lastDebounce = millis();
@@ -107,7 +107,7 @@ void loop() {
     String msg;
     serializeJson(doc, msg);
     client.publish(mqtt_button_topic, msg.c_str());
-    Serial.println("Button Pressed - Sent MQTT button event");
+    Serial.println("nút đã nhận, mess đã gửi");
   }
   lastBtnState = btnState;
 }

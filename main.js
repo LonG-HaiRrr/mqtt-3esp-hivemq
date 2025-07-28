@@ -16,6 +16,14 @@ let sending = false;
 // Lưu giá trị ADC riêng biệt cho từng ESP
 let adcValues = { "esp1": 0, "esp2": 0, "esp3": 0 };
 
+// Lưu dữ liệu adc theo từng esp (mảng dữ liệu lịch sử)
+let adcData = {
+  "esp1": [],
+  "esp2": [],
+  "esp3": [],
+};
+const adcMaxLength = 30;
+
 // Lưu lịch sử nút nhấn cho từng ESP
 let buttonHistory = { "esp1": [], "esp2": [], "esp3": [] };
 
@@ -45,7 +53,7 @@ mqtt_client.on('error', function () {
 setInterval(() => {
   const now = new Date();
   document.getElementById('mqtt-time').textContent = now.toLocaleTimeString('vi-VN', { hour12: false });
-}, 100);
+}, 1000);
 
 mqtt_client.on('message', function (topic, message) {
   const msgStr = message.toString();
@@ -59,11 +67,11 @@ mqtt_client.on('message', function (topic, message) {
     if (Array.isArray(data.leds)) {
       states[deviceId] = data.leds.map(x => !!x);
       for (let i = 1; i <= 3; i++) {
-        const idx = deviceId === "esp1" ? i : (deviceId === "esp2" ? i+3 : i+6);
+        const idx = deviceId === "esp1" ? i : (deviceId === "esp2" ? i + 3 : i + 6);
         const stateEl = document.getElementById(`state${idx}`);
         if (stateEl) {
-          stateEl.textContent = states[deviceId][i-1] ? "ON" : "OFF";
-          stateEl.className = "state-indicator " + (states[deviceId][i-1] ? "on" : "off");
+          stateEl.textContent = states[deviceId][i - 1] ? "ON" : "OFF";
+          stateEl.className = "state-indicator " + (states[deviceId][i - 1] ? "on" : "off");
         }
       }
     }
@@ -77,7 +85,7 @@ mqtt_client.on('message', function (topic, message) {
     const deviceId = topic.split("/")[2];
     if (!espList.includes(deviceId)) return;
     let parsed = {};
-    try { parsed = JSON.parse(msgStr);} catch { return; }
+    try { parsed = JSON.parse(msgStr); } catch { return; }
     const now = new Date();
 
     buttonHistory[deviceId].unshift({
@@ -96,7 +104,7 @@ function renderButtonHistory(deviceId) {
   });
   const elemId = { "esp1": "button-history-esp1", "esp2": "button-history-esp2", "esp3": "button-history-esp3" };
   const el = document.getElementById(elemId[deviceId]);
-  if(el) el.innerHTML = table;
+  if (el) el.innerHTML = table;
 }
 
 function updateStatus(msg) {
@@ -108,8 +116,8 @@ function updateStatus(msg) {
 function toggleButton(index) {
   if (sending) return;
   let deviceId, ledIdx;
-  if (index <= 2) { deviceId = "esp1"; ledIdx = index; } 
-  else if (index <= 5) { deviceId = "esp2"; ledIdx = index - 3; } 
+  if (index <= 2) { deviceId = "esp1"; ledIdx = index; }
+  else if (index <= 5) { deviceId = "esp2"; ledIdx = index - 3; }
   else { deviceId = "esp3"; ledIdx = index - 6; }
   states[deviceId][ledIdx] = !states[deviceId][ledIdx];
   updateButtons();
@@ -127,54 +135,82 @@ function sendCommand(deviceId) {
 }
 
 function updateButtons() {
-  for(let i = 0; i < 9; i++) {
+  for (let i = 0; i < 9; i++) {
     let deviceId, ledIdx;
-    if (i <= 2) { deviceId = "esp1"; ledIdx = i; } 
-    else if (i <= 5) { deviceId = "esp2"; ledIdx = i - 3; } 
+    if (i <= 2) { deviceId = "esp1"; ledIdx = i; }
+    else if (i <= 5) { deviceId = "esp2"; ledIdx = i - 3; }
     else { deviceId = "esp3"; ledIdx = i - 6; }
-    const btn = document.getElementById(`btn${i+1}`);
-    if(!btn) continue;
+    const btn = document.getElementById(`btn${i + 1}`);
+    if (!btn) continue;
     btn.disabled = sending;
     btn.className = states[deviceId][ledIdx] ? "btn btn-tat" : "btn btn-bat";
-    btn.textContent = (states[deviceId][ledIdx] ? "TẮT" : "BẬT") + ` LED ${i+1}`;
+    btn.textContent = (states[deviceId][ledIdx] ? "TẮT" : "BẬT") + ` LED ${i + 1}`;
   }
 }
 
 // ==== ADC đồ hoạ ====
-let adcData = [];
-const adcMaxLength = 30;
-const adcLineCtx = document.getElementById('adcLineChart').getContext('2d');
-const adcGaugeCtx = document.getElementById('adcGauge').getContext('2d');
+// Lấy context các canvas
+const adcLineCtx1 = document.getElementById('adcLineChart1').getContext('2d');
+const adcLineCtx2 = document.getElementById('adcLineChart2').getContext('2d');
+const adcLineCtx3 = document.getElementById('adcLineChart3').getContext('2d');
 
-let adcLineChart = new Chart(adcLineCtx, {
-  type: 'line',
-  data: {
-    labels: [],
-    datasets: [{
-      label: 'ADC',
-      backgroundColor: 'rgba(241,74,52,.10)',
-      borderColor: '#e22929',
-      borderWidth: 2,
-      data: [],
-      pointRadius: 4,
-      pointBackgroundColor: '#e22929',
-      tension: 0
-    }]
-  },
-  options: {
-    plugins: {
-      legend: { display: false },
-      title: { display: true, text: 'ADC Value', color: '#fff', font: { size: 18, weight: 'bold' } }
+const adcGaugeCtx1 = document.getElementById('adcGauge1').getContext('2d');
+const adcGaugeCtx2 = document.getElementById('adcGauge2').getContext('2d');
+const adcGaugeCtx3 = document.getElementById('adcGauge3').getContext('2d');
+
+const espCharts = {};
+
+// Hàm tạo line chart cho từng esp, trả về đối tượng chart
+function createLineChart(ctx, label) {
+  return new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [],
+      datasets: [{
+        label: label,
+        backgroundColor: 'rgba(241,74,52,.10)',
+        borderColor: '#e22929',
+        borderWidth: 2,
+        data: [],
+        pointRadius: 4,
+        pointBackgroundColor: '#e22929',
+        tension: 0
+      }]
     },
-    scales: {
-      x: { grid: { color: '#888' }, ticks: { color: '#888', font: { size: 13 } } },
-      y: { grid: { color: '#888' }, ticks: { color: '#888', font: { size: 13 } } }
+    options: {
+      plugins: {
+        legend: { display: false },
+        title: { display: true, text: label, color: '#fff', font: { size: 18, weight: 'bold' } }
+      },
+      scales: {
+        x: { grid: { color: '#888' }, ticks: { color: '#888', font: { size: 13 } } },
+        y: { grid: { color: '#888' }, ticks: { color: '#888', font: { size: 13 } } }
+      }
     }
-  }
-});
+  });
+}
 
-function drawAdcGauge(value) {
-  const ctx = adcGaugeCtx;
+// Khởi tạo 3 biểu đồ line + gauge cho từng esp
+espCharts["esp1"] = {
+  lineChart: createLineChart(adcLineCtx1, "ADC esp1"),
+  gaugeCtx: adcGaugeCtx1,
+  gaugeValueEl: document.getElementById('adcGaugeValue1')
+};
+
+espCharts["esp2"] = {
+  lineChart: createLineChart(adcLineCtx2, "ADC esp2"),
+  gaugeCtx: adcGaugeCtx2,
+  gaugeValueEl: document.getElementById('adcGaugeValue2')
+};
+
+espCharts["esp3"] = {
+  lineChart: createLineChart(adcLineCtx3, "ADC esp3"),
+  gaugeCtx: adcGaugeCtx3,
+  gaugeValueEl: document.getElementById('adcGaugeValue3')
+};
+
+// Hàm vẽ đồng hồ gauge dùng chung
+function drawAdcGauge(ctx, value) {
   ctx.clearRect(0, 0, 220, 220);
   const centerX = 110, centerY = 110, radius = 85;
   ctx.save();
@@ -216,31 +252,28 @@ function drawAdcGauge(value) {
   }
 }
 
-function updateAdc(newVal) {
+// Hàm cập nhật adc riêng cho từng esp (cập nhật cả biểu đồ line và gauge)
+function updateAdcEsp(espId, newVal) {
   const now = new Date();
   const label = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
-  adcData.push({ x: label, y: newVal });
-  if (adcData.length > adcMaxLength) adcData.shift();
-  adcLineChart.data.labels = adcData.map(v => v.x);
-  adcLineChart.data.datasets[0].data = adcData.map(v => v.y);
-  adcLineChart.update();
-  drawAdcGauge(newVal);
+  adcData[espId].push({ x: label, y: newVal });
+  if (adcData[espId].length > adcMaxLength) adcData[espId].shift();
+
+  const chartObj = espCharts[espId];
+  if (chartObj) {
+    chartObj.lineChart.data.labels = adcData[espId].map(v => v.x);
+    chartObj.lineChart.data.datasets[0].data = adcData[espId].map(v => v.y);
+    chartObj.lineChart.update();
+    drawAdcGauge(chartObj.gaugeCtx, newVal);
+    if (chartObj.gaugeValueEl) chartObj.gaugeValueEl.textContent = newVal;
+  }
 }
 
+// Hàm cập nhật adc cho tất cả esp
 function updateAdcAll() {
-  const val1 = adcValues["esp1"];
-  const val2 = adcValues["esp2"];
-  const val3 = adcValues["esp3"];
-
-  updateAdc(val1);  // Vẽ biểu đồ và gauge cho esp1
-
-  // Cập nhật giá trị hiển thị cho 3 ADC theo từng ESP
-  const el1 = document.getElementById('adcGaugeValue');
-  const el2 = document.getElementById('adcGaugeValue2');
-  const el3 = document.getElementById('adcGaugeValue3');
-  if(el1) el1.textContent = val1;
-  if(el2) el2.textContent = val2;
-  if(el3) el3.textContent = val3;
+  updateAdcEsp("esp1", adcValues["esp1"]);
+  updateAdcEsp("esp2", adcValues["esp2"]);
+  updateAdcEsp("esp3", adcValues["esp3"]);
 }
 
 // ==== Khởi tạo ====
@@ -250,7 +283,72 @@ window.onload = function () {
 };
 
 // Kết nối sự kiện nút bấm với toggleButton
-for(let i=1; i<=9; i++) {
+for (let i = 1; i <= 9; i++) {
   const btn = document.getElementById(`btn${i}`);
-  if(btn) btn.onclick = function() { toggleButton(i-1); };
+  if (btn) btn.onclick = function () { toggleButton(i - 1); };
 }
+
+
+
+// ==== Theme (Day/Night button with image bg) ====
+function setTheme(dark) {
+  if(dark){
+    document.body.classList.add('dark-mode');
+    document.body.classList.remove('light-mode');
+    document.getElementById('toggleContainer').classList.remove('checked');
+    document.getElementById('note-block').style.color = "#fff";
+  } else {
+    document.body.classList.remove('dark-mode');
+    document.body.classList.add('light-mode');
+    document.getElementById('toggleContainer').classList.add('checked');
+    document.getElementById('note-block').style.color = "#121212";
+  }
+  // Đổi màu ADC label, các chữ trên biểu đồ, gauge...
+  const adcLabels = document.querySelectorAll('.adcChartLabel');
+  adcLabels.forEach(el => {
+    el.style.color = dark ? '#b2c7ed' : '#236bc9';
+  });
+
+// 21/07/2025 
+  if (typeof adcLineChart !== "undefined") {
+  let isDark = dark;
+  let colorLine = isDark ? "#09f179ff" : "#8d0694ff"; //21/07/2025 màu lưới và chữ biểu đồ 
+  adcLineChart.options.plugins.title.color = colorLine;
+  adcLineChart.options.scales.x.grid.color = colorLine;
+  adcLineChart.options.scales.x.ticks.color = colorLine;
+  adcLineChart.options.scales.y.grid.color = colorLine;
+  adcLineChart.options.scales.y.ticks.color = colorLine;
+  adcLineChart.update();
+
+  // 21/07/2025 
+}
+
+}
+const THEME_KEY = "darkMode";
+function saveTheme(dark) { localStorage.setItem(THEME_KEY, dark ? "on" : "off"); }
+function restoreTheme() {
+  let isDark = true;
+  if (localStorage.getItem(THEME_KEY) === "off") isDark = false;
+  setTheme(isDark);
+  document.getElementById('toggle-theme-checkbox').checked = !isDark;
+}
+document.addEventListener('DOMContentLoaded', function () {
+  restoreTheme();
+  document.getElementById('toggle-theme-checkbox').addEventListener('change', function () {
+    let dark = !this.checked;
+    setTheme(dark);
+    saveTheme(dark);
+  });
+});
+// ==== BỔ SUNG: Header co lại khi cuộn (CÓ THỂ XÓA NGUYÊN ĐOẠN NÀY BẤT KỲ LÚC NÀO) ====
+(function() {
+  const header = document.querySelector('.thanh_header');
+  if (!header) return;
+  function onScroll() {
+    if (window.scrollY > 0) header.classList.add('shrink');
+    else header.classList.remove('shrink');
+  }
+  window.addEventListener('scroll', onScroll);
+  // Khi muốn bỏ hoàn toàn chỉ việc xóa khối này
+})();
+// ==== Hết hiệu ứng header co lại ====

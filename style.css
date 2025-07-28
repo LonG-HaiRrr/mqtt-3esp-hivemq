@@ -25,6 +25,7 @@
   .ts-info-label {color: #c3cade;} .ts-info-value {font-weight: 600;}
 /* chỉnh lại giao diện 27/07/2025 */
   .toggle-visual {
+    cursor: pointer;
      transform: scale(0.79); /* thu nhỏ scale xuống 79% */
     top: 16px;right: 24px;
     z-index: 999;width: 78px;
@@ -190,6 +191,12 @@ body:not(.dark-mode) .thanh_header {
 
 /* chỉnh lại giao diện 25/07/2025 responsive cho mobile */
 @media (max-width: 1000px) {
+.ahihi { /* giao diện đt : tránh mất chữ do thanh header cho web */
+  padding-top: 0px !important;
+}
+.callme {
+  padding-right: 65px;
+}
   body {
     font-size: 14px;
     padding: 0 10px;
@@ -207,8 +214,9 @@ body:not(.dark-mode) .thanh_header {
   }
 
   .toggle-visual {
+    cursor: pointer;
     position: fixed;
-    top: 8px;
+    top: 13px;
     right: 10px;
     width: 60px;
     height: 30px;
@@ -465,3 +473,8 @@ body:not(.dark-mode) .thanh_header {
 /* === Hết hiệu ứng header co lại === */
 
 /* chỉnh lại giao diện 27/07/2025 */
+
+
+.ahihi { /* giao diện web : để nó k mất chữ do thanh header */
+  padding-top: 100px;
+}
