@@ -198,12 +198,12 @@ body:not(.dark-mode) .thanh_header {
   transform: scale(1.7);
 }
 .header_phai {
-padding-right: 130px;
+padding-right: 90px;
 }
 .callme {
   /* padding-right: 75px; */
   transform: scale(1.7);
-  margin: 0 30px 0 30px !important;
+  padding: 0 30px 0 30px !important;
 }
   body {
     font-size: 14px;
@@ -212,7 +212,7 @@ padding-right: 130px;
 
   .infor_container {
     transform: scale(1.7);
-  margin: 0 30px 0 30px !important;
+  padding: 0 30px 0 30px !important;
   }
   #ts-info {    /* drop box của chữ i*/
     position: fixed;
@@ -400,25 +400,35 @@ padding-right: 130px;
 }
 
 #ts-info {
-  display: none;
-  position: absolute; 
-  top: 290%; /* hiện khối bên dưới icon, tăng giảm cho hợp */
-  left: -120px; /* hoặc số âm lớn nhỏ tuỳ ý */
+  position: absolute;
+  top: 290%; /* điều chỉnh tùy ý */
+  left: -120px; /* tùy vị trí bạn muốn */
   background: #0d2358;
   color: #fff;
   font-size: 16px;
   padding: 14px 20px 14px 16px;
   border-radius: 14px;
   box-shadow: 0 8px 32px 0 rgba(44, 225, 24, 0.28);
-  z-index: 1;
   max-width: 295px;
   min-width: 210px;
   word-break: break-word;
   overflow-wrap: break-word;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none; 
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
-.infor_container:hover #ts-info {
-  display: block;
+
+/* Hiển thị khi hover, focus hoặc hover vào vùng popup */
+.infor_container:hover #ts-info,
+.infor_container:focus-within #ts-info,
+.infor_container #ts-info:hover {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
+
 .ts-info-label { color: #b9c1cc; }
 .ts-info-value { font-weight: bold; color: #fff; }
 
