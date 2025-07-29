@@ -252,6 +252,7 @@ body:not(.dark-mode) .thanh_header {
     align-items: center;
     gap: 16px !important;
     margin-top: 16px !important;
+    padding: 0px 30px 0px 30px ;
   }
 
   #adcLineChart {
@@ -266,7 +267,7 @@ body:not(.dark-mode) .thanh_header {
   }
 
   .adcGaugeValue {
-    font-size: 29px;
+    font-size: 19px;
     color: greenyellow !important
   }
 
