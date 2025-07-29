@@ -17,18 +17,14 @@
 <div class="menu-container" tabindex="0">
   <i class="fa-solid fa-house icon_home fa-lg"></i>
   <div class="dropdown-menu">
-    <a href="https://fontawesome.com/icons/github?f=brands&s=solid" target="_blank">Menu 1</a>
-    <a href="https://fontawesome.com/icons/github?f=brands&s=solid" target="_blank">Menu 2</a>
-    <a href="https://fontawesome.com/icons/github?f=brands&s=solid" target="_blank">Menu 3</a>
+    <a id="house1">  <i class="fa-solid fa-house icon_home fa-lg"> </i> Zone 1 </a>
+    <a id="house2">  <i class="fa-solid fa-house icon_home fa-lg"> </i> Zone 2 </a>
+    <a id="house3">  <i class="fa-solid fa-house icon_home fa-lg"> </i> Zone 3 </a>
+    <a id="houseA">  <i class="fa-solid fa-house icon_home fa-lg"> </i> All Zone </a>
   </div>
 
 </div>
-
-
-
-
 </div>
-
 <div class="header_phai">
 <!-- nút gạt đổi giao diện -->
 <div class="toggle-visual" id="theme-toggle-visual" title="Đổi giao diện">
@@ -76,22 +72,21 @@
   </div>
 </div>
 </div>
-
-
-
 </header>
 
 
 
 
 <h2 class="ahihi">ESP8266 + MQTT HiveMQ</h2>
-<button id="btn1" class="btn btn-bat" onclick="toggleButton(0)">BẬT LED 1</button>
+<div class="zone_esp1">
+  <button id="btn1" class="btn btn-bat" onclick="toggleButton(0)">BẬT LED 1</button>
 <button id="btn2" class="btn btn-bat" onclick="toggleButton(1)">BẬT LED 2</button>
 <button id="btn3" class="btn btn-bat" onclick="toggleButton(2)">BẬT LED 3</button>
 <div id="states">
   <span class="span_trang_thai"><span class="led-label">LED 1:</span><span id="state1" class="state-indicator off">OFF</span></span>
   <span class="span_trang_thai"><span class="led-label">LED 2:</span><span id="state2" class="state-indicator off">OFF</span></span>
   <span class="span_trang_thai"><span class="led-label">LED 3:</span><span id="state3" class="state-indicator off">OFF</span></span>
+</div>
 </div>
 
 <div class="zone_esp2">
@@ -116,7 +111,8 @@
 
 
 
-<div id="adc-visual-block" class="adc-visual-row" style="margin-top:0px;">
+<div class="zone_esp1">
+  <div id="adc-visual-block" class="adc-visual-row" style="margin-top:0px;">
   <div class="adcLineChart">
     <canvas id="adcLineChart1" width="750" height="400"></canvas>
   </div>
@@ -125,8 +121,10 @@
     <div class="adcGaugeValue">giá trị adc esp1: <b><span id="adcGaugeValue1">--</span></b></div>
   </div>
 </div>
+</div>
 
-<div id="adc-visual-block" class="adc-visual-row" style="margin-top:0px;">
+<div class="zone_esp2">
+  <div id="adc-visual-block" class="adc-visual-row" style="margin-top:0px;">
   <!-- Thêm biểu đồ esp2 -->
    <div class="adcLineChart">
       <canvas id="adcLineChart2" width="750" height="400"></canvas>
@@ -136,7 +134,9 @@
     <div class="adcGaugeValue">giá trị adc esp2: <b><span id="adcGaugeValue2">--</span></b></div>
   </div>
 </div>
+</div>
 
+<div class="zone_esp3">
 <div id="adc-visual-block" class="adc-visual-row" style="margin-top:0px;">
   <!-- Thêm biểu đồ esp3 -->
 <div class="adcLineChart">
@@ -147,11 +147,14 @@
     <div class="adcGaugeValue">giá trị adc esp3: <b><span id="adcGaugeValue3">--</span></b></div>
   </div>
 </div>
+</div>
+
 
 
 <div id="note-block" style="padding-top:30px; padding-bottom:0px;">
-  <!-- Dòng tổng số lần bấm, bạn để ngay trên #note-block, hoặc ngay đầu trong đó -->
-
+<div class="textlsnutbam" style="font-size: 30px;">
+  <b>Lịch sử nút bấm</b>
+</div>
 <div id="press30sSummary" class="pressTotal" style="margin-bottom:14px;"></div>
 <div id="pressTotalLine" class="pressTotal" style="margin-bottom:8px;"></div>
 

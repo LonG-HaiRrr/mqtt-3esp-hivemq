@@ -153,15 +153,24 @@ function getPress30sRank() {
 // Hiển thị thống kê lượt bấm 30s
 function renderPress30sSummary() {
   let rankArr = getPress30sRank();
+  // Xác định theme hiện tại
+  const isDark = isDarkMode();
+
+  // Chọn màu chữ tổng thể cho block này
+  const blockColor = isDark ? '#c5ed00ff' : '#0b1f7aff';
+  // Chọn màu cho từng số (nếu >3 thì đỏ, còn lại xanh nổi bật trên theme)
+  const colorIfOk  = isDark ? '#1bd107ff' : '#005b1bff';
+  const colorIfWarn = isDark ? '#f01010ff'   : '#86031dff';
+
   const htmlArr = rankArr.map(x => {
-    const color = x.count > 3 ? '#e21c1c' : '#1bd107ff';
-    // Nếu nhiều hơn 1 thì 'n lần', nếu 1 thì '1 lần'
+    const color = x.count > 3 ? colorIfWarn : colorIfOk;
     return `<span style="color:${color};margin:0 8px;">
       ${x.esp.toUpperCase()} : <b>${x.count} lần</b>
     </span>`;
   });
+
   document.getElementById('press30sSummary').innerHTML =
-    `<span style="font-weight:bold;">Số lần bấm trong 30s:</span> ${htmlArr.join('|')}`;
+    `<span style="font-weight:bold;color:${blockColor}">Số lần bấm trong 30s:</span> ${htmlArr.join('|')}`;
 }
 
 
@@ -208,8 +217,8 @@ function renderButtonHistoryTable() {
   let table = `<tr>
     <th>STT</th>
     <th>Tên thiết bị</th>
-    <th>Giờ nhấn đầu (trong 30s)</th>
-    <th>Số lần bấm (30s)</th>
+    <th>Thời gian lần nhấn đầu (trong 30s)</th>
+    <th>Số lần bấm (trong 30s đó)</th>
   </tr>`;
 
   slots.forEach((row, idx) => {
@@ -488,3 +497,48 @@ setInterval(() => {
   renderPress30sSummary();
   renderButtonHistoryTable();
 }, 1100);
+
+// Hàm ẩn tất cả zone
+function hideAllZones() {
+  document.querySelectorAll('.zone_esp1, .zone_esp2, .zone_esp3').forEach(zone => {
+    zone.classList.remove('show');
+  });
+}
+
+// Hàm hiển thị 1 zone theo class tương ứng
+// Hàm hiển thị 1 zone theo class tương ứng
+function showZone(zoneClass) {
+  hideAllZones();
+  if (zoneClass === 'all') {
+    // Hiện hết
+    document.querySelectorAll('.zone_esp1, .zone_esp2, .zone_esp3').forEach(zone => {
+      zone.classList.add('show');
+    });
+  } else {
+    // ✅ Sử dụng querySelectorAll để lấy TẤT CẢ các phần tử có cùng class
+    const zones = document.querySelectorAll(`.${zoneClass}`);
+    zones.forEach(zone => {
+      zone.classList.add('show');
+    });
+  }
+}
+
+
+// Gán sự kiện click từng menu
+document.getElementById('house1').addEventListener('click', () => {
+  showZone('zone_esp1');
+});
+document.getElementById('house2').addEventListener('click', () => {
+  showZone('zone_esp2');
+});
+document.getElementById('house3').addEventListener('click', () => {
+  showZone('zone_esp3');
+});
+document.getElementById('houseA').addEventListener('click', () => {
+  showZone('all');
+});
+// Khi vừa load trang: hiện tất cả zone
+window.addEventListener('DOMContentLoaded', function() {
+  showZone('all');
+});
+
