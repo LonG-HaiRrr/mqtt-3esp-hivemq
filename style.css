@@ -47,7 +47,6 @@
   .toggle.checked .toggle-btn-slider { left: 45px;}
   #note-block{color:#fff;font-size:16px;padding:10px 0;}
   #ad-visual-block{margin:28px auto 0 auto;max-width:900px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:38px;}
-  /* @media (max-width:900px){#adc-visual-block {flex-direction:column !important;gap:16px !important;}} */
 
   .pressTotal {text-align:right; font-size:13px; color:#aad;}
   .adcChartLabel{font-size:15px;color:#236bc9;text-align:center;}
@@ -252,7 +251,6 @@ body:not(.dark-mode) .thanh_header {
     align-items: center;
     gap: 16px !important;
     margin-top: 16px !important;
-    padding: 0px 30px 0px 30px ;
   }
 
   #adcLineChart {
