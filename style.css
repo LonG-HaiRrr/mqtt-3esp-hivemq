@@ -533,3 +533,33 @@ body:not(.dark-mode) .thanh_header {
     0 0 10px 3px rgba(70, 130, 180, 0.7),
     0 0 20px 8px rgba(70, 130, 180, 0.4);
 }
+
+
+/* PC/Laptop: canvas lớn 1000px */
+@media (min-width: 1001px) {
+  .adc-visual-row, .adc-visual-block {
+    max-width: 10000px !important;
+    width: 1300px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: flex;
+    flex-direction: row;
+    gap: 38px;
+    align-items: flex-start;
+  }
+  .adcLineChart {
+    width: 1000px !important;
+    max-width: 1000px !important;
+    min-width: 0 !important;
+  }
+  .adcLineChart canvas {
+    width: 1000px !important;
+    height: 400px !important;
+    max-width: 1000px !important;
+    min-width: 0 !important;
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+
