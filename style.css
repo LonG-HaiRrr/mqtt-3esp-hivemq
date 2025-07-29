@@ -225,7 +225,7 @@ body:not(.dark-mode) .thanh_header {
     transform: scale(1.0);
     cursor: pointer;
     position: fixed;
-    top: 13px;
+    top: 19px;
     right: 10px;
     width: 78px;          /* Sửa 60px thành 78px (hoặc lớn hơn nếu muốn) */
     height: 36px;         /* Sửa 30px thành 36px */
@@ -235,7 +235,6 @@ body:not(.dark-mode) .thanh_header {
     width: 28px !important;   /* Thêm dòng này để slider đủ to */
     height: 28px !important;
   }
-}
 
   h2 {
     font-size: 50px;
