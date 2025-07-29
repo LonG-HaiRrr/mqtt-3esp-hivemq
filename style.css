@@ -190,6 +190,9 @@ body:not(.dark-mode) .thanh_header {
 .ahihi { /* giao diện đt : tránh mất chữ do thanh header cho web */
   padding-top: 0px !important;
 }
+.thanh_header {
+  height: 80px !important;
+}
 .callme {
   padding-right: 65px;
 }
