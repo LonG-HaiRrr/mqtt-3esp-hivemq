@@ -194,11 +194,11 @@ body:not(.dark-mode) .thanh_header {
   height: 80px !important;
 }
 .menu-container {
-    padding-left: 5px;
+    padding-left: 30px;
   transform: scale(1.7);
 }
 .callme {
-  padding-right: 65px;
+  padding-right: 75px;
   transform: scale(1.7);
 }
   body {
@@ -688,3 +688,56 @@ body.light-mode #button-history-table tr:hover td {
 }
 
 
+/* .mylogo {
+  padding-left: 30px;
+    font-size: 26px;
+    font-weight: 800;
+  animation: nav-zoom-in 3.7s cubic-bezier(.77,0,.18,1) forwards;
+  text-decoration: none;
+  cursor: pointer;
+}
+@keyframes nav-zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.7) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+} */
+.mylogo {
+  padding-left: 30px;
+  font-size: 26px;
+  font-weight: 800;
+  animation: logo-move-right 1.5s cubic-bezier(0.6, 0, 0.4, 1) forwards;
+  animation: logo-move-left 0.8s cubic-bezier(0.6, 0, 0.4, 1) forwards;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@keyframes logo-move-right {
+  0% {
+    opacity: 0;
+    transform: scale(0.7) translateX(0);
+  }
+  15% {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateX(200px);
+  }
+}
+
+@keyframes logo-move-left {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateX(200px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+  }
+}
