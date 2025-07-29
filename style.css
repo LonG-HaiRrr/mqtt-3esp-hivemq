@@ -406,8 +406,6 @@ padding-right: 90px;
   background: #0d2358;
   color: #fff;
   font-size: 16px;
-  padding: 14px 20px 14px 16px;
-  border-radius: 14px;
   box-shadow: 0 8px 32px 0 rgba(44, 225, 24, 0.28);
   max-width: 295px;
   min-width: 210px;
@@ -428,7 +426,13 @@ padding-right: 90px;
   visibility: visible;
   pointer-events: auto;
 }
-
+.infor_container:hover #ts-info,
+.infor_container:focus-within #ts-info,
+.infor_container.clicking #ts-info {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
 .ts-info-label { color: #b9c1cc; }
 .ts-info-value { font-weight: bold; color: #fff; }
 
