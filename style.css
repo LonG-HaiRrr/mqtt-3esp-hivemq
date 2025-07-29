@@ -184,24 +184,33 @@ body:not(.dark-mode) .thanh_header {
 /* chỉnh lại giao diện 22/07/2025 */
 
 
-
+/* transform: scale(0.9); */
 /* chỉnh lại giao diện 25/07/2025 responsive cho mobile */
 @media (max-width: 1000px) {
 .ahihi { /* giao diện đt : tránh mất chữ do thanh header cho web */
-  padding-top: 0px !important;
+  padding-top: 100px !important;
 }
 .thanh_header {
   height: 80px !important;
 }
+.menu-container {
+    padding-left: 5px;
+  transform: scale(1.7);
+}
 .callme {
   padding-right: 65px;
+  transform: scale(1.7);
 }
   body {
     font-size: 14px;
     padding: 0 10px;
   }
 
-  #ts-info {
+  .infor_container {
+    transform: scale(1.7);
+    padding-right: 35px;
+  }
+  #ts-info {    /* drop box của chữ i*/
     position: fixed;
     top: 8px;
     left: 8px;
@@ -213,14 +222,20 @@ body:not(.dark-mode) .thanh_header {
   }
 
   .toggle-visual {
+    transform: scale(1.0);
     cursor: pointer;
     position: fixed;
     top: 13px;
     right: 10px;
-    width: 60px;
-    height: 30px;
+    width: 78px;          /* Sửa 60px thành 78px (hoặc lớn hơn nếu muốn) */
+    height: 36px;         /* Sửa 30px thành 36px */
     z-index: 9999;
   }
+  .toggle-btn-slider {
+    width: 28px !important;   /* Thêm dòng này để slider đủ to */
+    height: 28px !important;
+  }
+}
 
   h2 {
     font-size: 50px;
