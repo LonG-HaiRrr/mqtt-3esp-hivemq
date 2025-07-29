@@ -197,9 +197,13 @@ body:not(.dark-mode) .thanh_header {
     padding-left: 30px;
   transform: scale(1.7);
 }
+.header_phai {
+padding-right: 130px;
+}
 .callme {
-  padding-right: 75px;
+  /* padding-right: 75px; */
   transform: scale(1.7);
+  margin: 0 30px 0 30px !important;
 }
   body {
     font-size: 14px;
@@ -208,7 +212,7 @@ body:not(.dark-mode) .thanh_header {
 
   .infor_container {
     transform: scale(1.7);
-    padding-right: 35px;
+  margin: 0 30px 0 30px !important;
   }
   #ts-info {    /* drop box của chữ i*/
     position: fixed;
@@ -321,28 +325,11 @@ body:not(.dark-mode) .thanh_header {
     justify-content: space-between;
     margin: 4px 0;
   }
-  /* .span_trang_thai {
-    text-align: center !important;
-    align-items: center;
-    padding-left: 400px;
-    padding-right: 400px;
-  } */
 
-
-  #mobileBtn {
-    display: block !important;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
-    padding: 10px 20px;
-    font-size: 1.1rem;
-    background: #3b82f6;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+.dropdown-menu1 {
+  left: -5px !important;
 }
+
 }
 
 /* chỉnh lại giao diện 25/07/2025 */
