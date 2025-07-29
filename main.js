@@ -82,6 +82,8 @@ mqtt_client.on('message', function (topic, message) {
       updateAdcAll();
     }
   } else if (topic.startsWith(topic_button_base)) {
+
+    // ==== THAY ĐỔI BẮT ĐẦU ====
     const deviceId = topic.split("/")[2];
     if (!espList.includes(deviceId)) return;
     let parsed = {};
@@ -90,22 +92,140 @@ mqtt_client.on('message', function (topic, message) {
 
     buttonHistory[deviceId].unshift({
       time: now.toLocaleTimeString("vi-VN", { hour12: false }),
-      millis: parsed.millis || 0,
+      millis: parsed.millis || 0
     });
     if (buttonHistory[deviceId].length > 10) buttonHistory[deviceId].pop();
-    renderButtonHistory(deviceId);
+
+    // Gán timestamp thực và textTime (dùng cho thống kê 30s & note)
+    let nowTS = now.getTime();
+    let timeStrVN = now.toLocaleTimeString('vi-VN', { hour12: false }) + " " + now.toLocaleDateString('vi-VN');
+    buttonHistory[deviceId][0].ts = nowTS;
+    buttonHistory[deviceId][0].textTime = timeStrVN;
+
+    logPress(deviceId, timeStrVN);
+    renderPressTotalLine();
+    renderPress30sSummary();
+    renderButtonHistoryTable();
+    // ==== THAY ĐỔI KẾT THÚC ====
   }
 });
+// Biến lưu tổng số lần bấm & thời gian lần đầu từng ESP
+let pressTotalInfo = {
+  esp1: { total: 0, firstTime: null },
+  esp2: { total: 0, firstTime: null },
+  esp3: { total: 0, firstTime: null }
+};
 
-function renderButtonHistory(deviceId) {
-  let table = "<tr><th>#</th><th>Giờ nhấn</th></tr>";
-  buttonHistory[deviceId].forEach((item, idx) => {
-    table += `<tr><td>${idx + 1}</td><td>${item.time}</td></tr>`;
-  });
-  const elemId = { "esp1": "button-history-esp1", "esp2": "button-history-esp2", "esp3": "button-history-esp3" };
-  const el = document.getElementById(elemId[deviceId]);
-  if (el) el.innerHTML = table;
+// Đếm số lần bấm ESP trong 30 giây
+function getPressCount30s(esp) {
+  let now = Date.now();
+  return (buttonHistory[esp] || []).filter(item => now - (item.ts || 0) < 30000).length;
 }
+
+// Ghi nhận mỗi lần bấm
+function logPress(esp, timeStr) {
+  pressTotalInfo[esp].total += 1;
+  if (!pressTotalInfo[esp].firstTime) pressTotalInfo[esp].firstTime = timeStr;
+}
+
+// Hiển thị dòng tổng số lần bấm
+function renderPressTotalLine() {
+  // Tính tổng mọi ESP
+  let totalAll = 0;
+  let arr = ["esp1", "esp2", "esp3"].map((e, idx) => {
+    totalAll += pressTotalInfo[e].total;
+    return `ESP${idx+1}: <b>${pressTotalInfo[e].total} (lần) &nbsp; </b>`;
+  });
+
+  // Xuất ra: tổng số lần bấm ở trên, các ESP ở dưới cùng dòng, chia |
+  document.getElementById("pressTotalLine").innerHTML = `
+    <span style="font-weight:bold;">Tổng số lần bấm: </span> <b>${totalAll} (lần) &nbsp; || </b>
+    &nbsp;&nbsp;&nbsp;${arr.join(' | ')}
+  `;
+}
+
+
+// Lấy thứ tự ESP theo lượt bấm 30s giảm dần
+function getPress30sRank() {
+  return ["esp1", "esp2", "esp3"].map(e => ({ esp: e, count: getPressCount30s(e) })).sort((a, b) => b.count - a.count);
+}
+
+// Hiển thị thống kê lượt bấm 30s
+function renderPress30sSummary() {
+  let rankArr = getPress30sRank();
+  const htmlArr = rankArr.map(x => {
+    const color = x.count > 3 ? '#e21c1c' : '#1bd107ff';
+    // Nếu nhiều hơn 1 thì 'n lần', nếu 1 thì '1 lần'
+    return `<span style="color:${color};margin:0 8px;">
+      ${x.esp.toUpperCase()} : <b>${x.count} lần</b>
+    </span>`;
+  });
+  document.getElementById('press30sSummary').innerHTML =
+    `<span style="font-weight:bold;">Số lần bấm trong 30s:</span> ${htmlArr.join('|')}`;
+}
+
+
+// Gom lịch sử bấm từng ESP thành các slot 30s (window 30s nào có ít nhất 1 lần bấm thì thành 1 dòng)
+function groupPressesBy30s() {
+  let slotList = [];
+  for (const esp of espList) {
+    // lịch sử cho thiết bị này, sắp xếp tăng dần theo thời gian thực
+    const hist = buttonHistory[esp].slice().sort((a, b) => (a.ts || 0) - (b.ts || 0));
+    let windowStart = null, windowItems = [];
+    for (let press of hist) {
+      if (!windowStart || (press.ts - windowStart >= 30000)) {
+        if (windowItems.length > 0) {
+          // Kết thúc 1 slot
+          slotList.push({
+            esp,
+            time: windowItems[0].textTime || windowItems[0].time, // thời điểm bấm đầu tiên trong slot
+            count: windowItems.length,
+          });
+        }
+        windowStart = press.ts;
+        windowItems = [];
+      }
+      windowItems.push(press);
+    }
+    // còn sót slot cuối cùng
+    if (windowItems.length > 0) {
+      slotList.push({
+        esp,
+        time: windowItems[0].textTime || windowItems[0].time,
+        count: windowItems.length,
+      });
+    }
+  }
+  // Sắp xếp mới nhất lên đầu
+  slotList.sort((a, b) => (b.time > a.time ? 1 : -1));
+  return slotList;
+}
+
+// Hàm render bảng thống kê chung 3 esp
+function renderButtonHistoryTable() {
+  const slots = groupPressesBy30s();
+
+  let table = `<tr>
+    <th>STT</th>
+    <th>Tên thiết bị</th>
+    <th>Giờ nhấn đầu (trong 30s)</th>
+    <th>Số lần bấm (30s)</th>
+  </tr>`;
+
+  slots.forEach((row, idx) => {
+    const tdClass = row.count > 3 ? " style='background:#d74949;color:#ffeeee;font-weight:bold;'" : "";
+    table += `<tr>
+      <td>${idx + 1}</td>
+      <td${tdClass}>${row.esp.toUpperCase()}</td>
+      <td>${row.time}</td>
+      <td${tdClass}>${row.count}</td>
+    </tr>`;
+  });
+
+  document.getElementById("button-history-table").innerHTML = table;
+}
+
+
 
 function updateStatus(msg) {
   const el = document.getElementById('status');
@@ -247,7 +367,7 @@ function drawAdcGauge(ctx, value) {
     const a = Math.PI * (1 + 1.9 * v / 1024);
     const tx = centerX + Math.cos(a) * (radius - 20);
     const ty = centerY + Math.sin(a) * (radius - 20);
-    ctx.fillStyle = "#fff";
+    ctx.fillStyle = isDarkMode() ? "#0cededff" : "#412561";  // đổi màu cho số trong đồng hồ ở đây
     ctx.fillText(v, tx, ty);
   }
 }
@@ -279,8 +399,9 @@ function updateAdcAll() {
 // ==== Khởi tạo ====
 window.onload = function () {
   updateButtons();
-  espList.forEach(deviceId => renderButtonHistory(deviceId));
+  renderButtonHistoryTable(); // Hiển thị bảng thống kê tổng hợp chung 3 esp
 };
+
 
 // Kết nối sự kiện nút bấm với toggleButton
 for (let i = 1; i <= 9; i++) {
@@ -291,6 +412,9 @@ for (let i = 1; i <= 9; i++) {
 
 
 // ==== Theme (Day/Night button with image bg) ====
+function isDarkMode() {
+  return document.body.classList.contains('dark-mode');
+}
 function setTheme(dark) {
   if(dark){
     document.body.classList.add('dark-mode');
@@ -310,6 +434,11 @@ function setTheme(dark) {
   });
   // đổi màu biêu
    updateChartColors(dark);
+   // VẼ LẠI gauge ADC để số đổi đúng màu theo theme mới
+  ["esp1", "esp2", "esp3"].forEach(id => {
+    drawAdcGauge(espCharts[id].gaugeCtx, adcValues[id]);
+  });
+
 }
 function updateChartColors(isDark) {
   const colorLine = isDark ? "#09f179" : "#8d0694";
@@ -352,3 +481,10 @@ document.addEventListener('DOMContentLoaded', function () {
   // Khi muốn bỏ hoàn toàn chỉ việc xóa khối này
 })();
 // ==== Hết hiệu ứng header co lại ====
+
+
+
+setInterval(() => {
+  renderPress30sSummary();
+  renderButtonHistoryTable();
+}, 1100);

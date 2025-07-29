@@ -136,7 +136,7 @@ body.dark-mode #history-press-block h3 {
   padding-left: 500px; padding-right: 500px; align-items: center;
 }
 body.dark-mode .pressTotal {
-  color: #aad;          /* tông xanh nhạt */
+  color: rgb(191, 233, 7);          /* tông xanh nhạt */
 }
 
 /* CHO GIAO DIỆN SÁNG (light-mode) */
@@ -154,7 +154,7 @@ body:not(.dark-mode) #history-press-block h3 {
   padding-left: 500px; padding-right: 500px; align-items: center;
 }
 body:not(.dark-mode) .pressTotal {
-  color: #28707b;        /* xanh đậm hơn */
+  color: #9c4758;        /* xanh đậm hơn */
 }
 body:not(.dark-mode) .thanh_header {
   background: #9d9a9a;
@@ -545,21 +545,104 @@ body:not(.dark-mode) .thanh_header {
     display: flex;
     flex-direction: row;
     gap: 38px;
-    align-items: flex-start;
+    align-items: center;
   }
   .adcLineChart {
     width: 1000px !important;
     max-width: 1000px !important;
     min-width: 0 !important;
+    height: auto !important;
   }
   .adcLineChart canvas {
     width: 1000px !important;
-    height: 400px !important;
+    height: 450px !important;
     max-width: 1000px !important;
     min-width: 0 !important;
     display: block;
     margin: 0 auto;
   }
+}
+
+body.dark-mode .adcGaugeValue,
+body.dark-mode .adcGaugeValue b,
+body.dark-mode .adcGaugeValue span {
+  color: #daed0e !important;
+}
+
+body.light-mode .adcGaugeValue,
+body.light-mode .adcGaugeValue b,
+body.light-mode .adcGaugeValue span {
+  color: #d10a0a !important;
+}
+
+/* ---- CHỈ CSS BẢNG #button-history-table, tối/sáng ---- */
+
+/* DARK MODE */
+body.dark-mode #button-history-table {
+  background: #121d30;
+  border-radius: 12px;
+  overflow: hidden;
+}
+body.dark-mode #button-history-table th {
+  background: #2e3d5b;
+  color: #b2c7ed;
+  font-weight: bold;
+}
+body.dark-mode #button-history-table td {
+  background: #172233;
+  color: #fff;
+}
+body.dark-mode #button-history-table tr:nth-child(even) td {
+  background: #1b2437;
+}
+body.dark-mode #button-history-table tr:hover td {
+  background: #244683;
+  color: #fff;
+}
+
+/* LIGHT MODE */
+body.light-mode #button-history-table {
+  background: #fff;
+  overflow: hidden;
+}
+body.light-mode #button-history-table th {
+  background: #d2e5f6;
+  color: #0c3d65;
+  font-weight: bold;
+}
+body.light-mode #button-history-table td {
+  background: #fff;
+  color: #222;
+}
+body.light-mode #button-history-table tr:nth-child(even) td {
+  background: #f3f9fc;
+}
+body.light-mode #button-history-table tr:hover td {
+  background: #ffe2f5;
+  color: #a22677;
+}
+
+#button-history-table {
+  width: 80%;
+  margin: 0 auto 100px;
+  border-collapse: collapse;
+  font-size: 16px;
+  transition: background 0.35s, color 0.35s;
+}
+#button-history-table th,
+#button-history-table td {
+  padding: 10px 30px 0 30px;
+  border: 1px solid #394b69;
+  text-align: center;
+  vertical-align: middle;
+}
+#press30sSummary, #pressTotalLine {
+  font-size: 15px;
+  text-align: right;
+  font-family: Arial, sans-serif;
+}
+#press30sSummary b, #pressTotalLine b {
+  font-weight: bold;
 }
 
 
