@@ -308,21 +308,21 @@ function setTheme(dark) {
   adcLabels.forEach(el => {
     el.style.color = dark ? '#b2c7ed' : '#236bc9';
   });
-
-// 21/07/2025 
-  if (typeof adcLineChart !== "undefined") {
-  let isDark = dark;
-  let colorLine = isDark ? "#09f179ff" : "#8d0694ff"; //21/07/2025 màu lưới và chữ biểu đồ 
-  adcLineChart.options.plugins.title.color = colorLine;
-  adcLineChart.options.scales.x.grid.color = colorLine;
-  adcLineChart.options.scales.x.ticks.color = colorLine;
-  adcLineChart.options.scales.y.grid.color = colorLine;
-  adcLineChart.options.scales.y.ticks.color = colorLine;
-  adcLineChart.update();
-
-  // 21/07/2025 
+  // đổi màu biêu
+   updateChartColors(dark);
 }
-
+function updateChartColors(isDark) {
+  const colorLine = isDark ? "#09f179" : "#8d0694";
+  Object.values(espCharts).forEach(chartObj => {
+    const lineChart = chartObj.lineChart;
+    if (!lineChart) return;
+    lineChart.options.plugins.title.color = colorLine;
+    lineChart.options.scales.x.grid.color = colorLine;
+    lineChart.options.scales.x.ticks.color = colorLine;
+    lineChart.options.scales.y.grid.color = colorLine;
+    lineChart.options.scales.y.ticks.color = colorLine;
+    lineChart.update();
+  });
 }
 const THEME_KEY = "darkMode";
 function saveTheme(dark) { localStorage.setItem(THEME_KEY, dark ? "on" : "off"); }

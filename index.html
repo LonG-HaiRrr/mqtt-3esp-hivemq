@@ -58,7 +58,7 @@
       <i class="fa-brands fa-facebook fa-xl"style="margin-right: 6px;"></i>
       Facebook</a>
 
-    <a href="tel:0868699123 đây đ phải số t" >
+    <a href="tel:1234567890 đây đ phải số t" >
       Gọi điện
     </a>
   </div>
@@ -117,7 +117,9 @@
 
 
 <div id="adc-visual-block" class="adc-visual-row" style="margin-top:0px;">
-  <canvas id="adcLineChart1" width="500" height="250"></canvas>
+  <div class="adcLineChart">
+    <canvas id="adcLineChart1" width="500" height="250"></canvas>
+  </div>
   <div class="adcGauge-container">
     <canvas id="adcGauge1" width="220" height="220"></canvas>
     <div class="adcGaugeValue">giá trị adc esp1: <b><span id="adcGaugeValue1">--</span></b></div>
@@ -126,7 +128,9 @@
 
 <div id="adc-visual-block" class="adc-visual-row" style="margin-top:0px;">
   <!-- Thêm biểu đồ esp2 -->
-  <canvas id="adcLineChart2" width="500" height="250"></canvas>
+   <div class="adcLineChart">
+      <canvas id="adcLineChart2" width="500" height="250"></canvas>
+   </div> 
   <div class="adcGauge-container">
     <canvas id="adcGauge2" width="220" height="220"></canvas>
     <div class="adcGaugeValue">giá trị adc esp2: <b><span id="adcGaugeValue2">--</span></b></div>
@@ -135,7 +139,11 @@
 
 <div id="adc-visual-block" class="adc-visual-row" style="margin-top:0px;">
   <!-- Thêm biểu đồ esp3 -->
-  <canvas id="adcLineChart3" width="500" height="250"></canvas>
+<div class="adcLineChart">
+  <canvas id="adcLineChart3" width="1000" height="400"></canvas>
+</div>
+   
+
   <div class="adcGauge-container">
     <canvas id="adcGauge3" width="220" height="220"></canvas>
     <div class="adcGaugeValue">giá trị adc esp3: <b><span id="adcGaugeValue3">--</span></b></div>
