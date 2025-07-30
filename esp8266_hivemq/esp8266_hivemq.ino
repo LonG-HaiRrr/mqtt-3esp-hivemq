@@ -82,7 +82,7 @@ void loop() {
   client.loop();
 
   static unsigned long t = 0;
-  if (millis() - t > 50) {
+  if (millis() - t > 200) {
     t = millis();
     StaticJsonDocument<128> doc;
     JsonArray arr = doc.createNestedArray("leds");
@@ -107,7 +107,6 @@ void loop() {
     String msg;
     serializeJson(doc, msg);
     client.publish(mqtt_button_topic, msg.c_str());
-    Serial.println("nút đã nhận, mess đã gửi");
   }
   lastBtnState = btnState;
 }

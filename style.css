@@ -567,6 +567,7 @@ padding-right: 90px;
     flex-direction: row;
     gap: 38px;
     align-items: center;
+    margin-bottom: 50px;
   }
   .adcLineChart {
     width: 1000px !important;
