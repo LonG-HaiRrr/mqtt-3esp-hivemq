@@ -186,7 +186,7 @@ body:not(.dark-mode) .thanh_header {
 /* chỉnh lại giao diện 25/07/2025 responsive cho mobile */
 @media (max-width: 1000px) {
 .ahihi { /* giao diện đt : tránh mất chữ do thanh header cho web */
-  padding-top: 100px !important;
+  padding-top: 50px !important;
 }
 .thanh_header {
   height: 80px !important;
