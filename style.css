@@ -687,10 +687,12 @@ body.light-mode #button-history-table tr:hover td {
   height: auto; /* hoặc cố định chiều cao phù hợp */
 }
 
-.group-box {
-    border: 2px solid #1976d2;
+.group-box1,
+.group-box2,
+.group-box3 {
+    border: 2px solid #444647;
     border-radius: 8px;
-    margin: 20px auto 30px auto;
+    margin: 100px auto 100px auto;
     padding: 20px 20px 10px 20px;
     position: relative;
     background: #163e06;
@@ -699,7 +701,9 @@ body.light-mode #button-history-table tr:hover td {
     max-width: 700px;
 }
 
-.group-box legend, .group-box .group-title {
+.group-box1 legend, .group-box1 .group-title,
+.group-box2 legend, .group-box2 .group-title,
+.group-box3 legend, .group-box3 .group-title {
     position: absolute;
     top: -10px;
     left: 20px;
@@ -717,7 +721,9 @@ body.light-mode #button-history-table tr:hover td {
   inherits: false;
 }
 
-.group-box::after, .group-box::before{
+.group-box1::after, .group-box1::before,
+.group-box2::after, .group-box2::before,
+.group-box3::after, .group-box3::before {
   content: '';
   position: absolute;
   height: 100%;
@@ -731,9 +737,33 @@ body.light-mode #button-history-table tr:hover td {
   border-radius: 10px;
   animation: 3s spin linear infinite;
 }
-.group-box::before{
+
+.group-box2::after, .group-box2::before{
+    background-image: conic-gradient(from var(--angle),transparent 70%, #006aff) !important;
+    animation: 2s spin linear infinite !important;
+  }
+.group-box3::before {
+  background-image: conic-gradient(from var(--angle), transparent 70%, #d8df10, #ff4545);
+  animation: spin 3s linear infinite;
+}
+
+.group-box3::after {
+  background-image: conic-gradient(from calc(var(--angle) * -1), transparent 70%, #00ff99, #006aff);
+  animation: spinReverse 3s linear infinite;
+  animation-delay: 1.5s;
+}
+
+
+
+.group-box1::before,
+.group-box2::before,
+.group-box3::before {
   filter: blur(1.5rem);
   opacity: 0.5;
+}
+.group-box3::after {
+  filter: blur(1.5rem);
+  opacity: 0.9;
 }
 @keyframes spin{
   from{
@@ -743,17 +773,35 @@ body.light-mode #button-history-table tr:hover td {
     --angle: 360deg;
   }
 }
-
-body.dark-mode .group-box,
-body.dark-mode .group-box legend,
-body.dark-mode .group-box .group-title 
- {
+@keyframes spinReverse {
+  from {
+    --angle: 0deg;
+  }
+  to {
+    --angle: -360deg; /* quay ngược chiều */
+  }
+}
+body.dark-mode .group-box1,
+body.dark-mode .group-box1 legend,
+body.dark-mode .group-box1 .group-title,
+body.dark-mode .group-box2,
+body.dark-mode .group-box2 legend,
+body.dark-mode .group-box2 .group-title,
+body.dark-mode .group-box3,
+body.dark-mode .group-box3 legend,
+body.dark-mode .group-box3 .group-title  {
     background: #191b22;    /* hoặc màu tối khác tùy bạn */
 }
 
-body.light-mode .group-box,
-body.light-mode .group-box legend,
-body.light-mode .group-box .group-title  {
+body.light-mode .group-box1,
+body.light-mode .group-box1 legend,
+body.light-mode .group-box1 .group-title,
+body.light-mode .group-box2,
+body.light-mode .group-box2 legend,
+body.light-mode .group-box2 .group-title,
+body.light-mode .group-box3,
+body.light-mode .group-box3 legend,
+body.light-mode .group-box3 .group-title  {
     background: #fafdff;    /* hoặc màu sáng bạn thích */
 }
 
