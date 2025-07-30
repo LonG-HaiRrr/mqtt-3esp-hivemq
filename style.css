@@ -223,14 +223,7 @@ padding-right: 90px;
     max-width: 60%;
     z-index: 9999;
   }
-  /* Mặc định ẩn drop box trên mobile */
-  .infor_container #ts-info {
-    display: none !important;
-  }
-  /* Khi có class "active" ở infor_container thì hiện lên */
-  .infor_container.active #ts-info {
-    display: block !important;
-  }
+
   .toggle-visual {
     transform: scale(1.0);
     cursor: pointer;
