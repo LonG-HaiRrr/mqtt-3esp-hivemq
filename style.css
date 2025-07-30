@@ -867,15 +867,104 @@ body.light-mode .group-box3 .group-title  {
 
 /* Nội dung modal */
 .modal-content {
-  width: 1100px;
-  height: 950px;
-  color: #000;
-  background: rgb(75, 67, 67);
-  border-radius: 8px;
+  width: 800px;
+  height: 600px;
+  color: #ffffff;
+  /* background: rgb(46, 206, 56);
+  background-image: url("https://rtc.edu.vn/wp-content/uploads/2023/04/IOT-la-gi-1400x788.jpg");  border-radius: 8px;
+  background-size: cover;    
+  background-blend-mode: multiply; Chọn thử multiply, overlay hoặc soft-light tùy cảm giác muốn đạt */
+  background: rgba(0, 39, 93, 0.681);
   padding: 20px;
   box-sizing: border-box;
   position: relative;
   box-shadow: 0 0 15px rgba(0,0,0,0.4);
   overflow-y: auto;
+  text-align: left;
+  align-items: left;
 }
+
+
+
+
+
+/* Header flex (chứa nút chọn chip & copy) */
+.header-flex {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.select-chip button {
+  margin-right: 10px;
+  padding: 7px 17px;
+  border: none;
+  border-radius: 5px;
+  background: #555;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background .2s;
+  font-size: 20px;
+}
+
+.select-chip button.active,
+.select-chip button:hover {
+  background: #2196f3;
+  color: #000;
+}
+
+.copy-btn {
+  background: #444;
+  color: #fff;
+  padding: 6px;
+  margin-left: 350px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background .2s;
+}
+.copy-btn:active {
+  background: #388e3c;
+}
+
+#closeModal {
+  background: #af2020;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 20px;
+  cursor: pointer;
+  float: right;
+  margin-bottom: 30px;
+}
+
+/* Code block */
+  /* justify-content: center;
+  align-items: center; */
+.noidung_modal {
+  font-size: 20px;
+  justify-content: left;
+  align-items: left; 
+  text-align: left;
+}
+
+pre {
+  background: #191919;
+  border-radius: 7px;
+  padding: 22px;
+  overflow-x: auto;
+  max-width: 600px;
+  color: #fcffa3;
+  font-size: 20px;
+}
+code {
+  justify-content: left;
+  align-items: left;
+  text-align: left;
+}
+
 

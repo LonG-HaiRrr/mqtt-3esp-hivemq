@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Điều khiển LED ESP8266 MQTT</title>
+  <title>Điều khiển 3 ESP MQTT</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="icon" href="logoYoutube.ico" type="image/ico">
@@ -235,15 +235,44 @@
 
 
     <!-- Modal -->
-    <div id="myModal">
-      <div class="modal-content">
-        <!-- Nội dung bạn muốn hiện trong modal -->
-        <h2>Đăng nhập</h2>
-        <p>Đây là nội dung hộp thoại modal.</p>
-        <button id="closeModal">Đóng</button>
-      </div>
-    </div>
+  <div id="myModal">
+    <div class="modal-content">
+      <button id="closeModal">Đóng</button>
+      <div class="header-flex">
+        <div class="select-chip">
+          <button id="btn_esp32">ESP32</button>
+          <button id="btn_esp8266">ESP8266</button>
+        </div>
+      
     
-<script src="main.js"></script>
+        </div>
+
+      <div class="noidung_modal">
+        <p>Dưới đây là một đoạn mã đơn giản để <strong>bật/tắt LED onboard trên các ESP tương ứng</strong> mỗi 100ms. LED onboard thường được gắn với <strong>GPIO2</strong> (hoặc D4 trên NodeMCU).</p>
+
+        <h3>🧠 <strong>Mục tiêu:</strong></h3>
+        <ul>
+          <li>Bật/tắt LED onboard mỗi 100ms.</li>
+          <li>LED sẽ nhấp nháy liên tục.</li>
+        </ul>        
+        <pre>
+            <button class="copy-btn" id="copyCodeBtn" title="Copy code!">📋 Sao chép</button>
+          <code id="codeBlock" class="cpp"><br><br>bấm vào nút ESP32 hoặc nút ESP8266 <br>để lấy code test board
+          </code>
+        </pre>
+
+        <p>Giải thích:</p>
+          <li><b>LED_BUILTIN</b> là hằng số chỉ đến chân LED onboard trên các board ESP8266 phổ biến.</li>
+          <li>Với NodeMCU/Wemos D1 mini: <b>LED_BUILTIN = GPIO2</b>.</li>
+          <li>Trên một số board, bật LED là mức <b>LOW</b>, tắt là mức <b>HIGH</b>.</li>
+          <li><code>delay(100)</code> làm LED bật/tắt mỗi 100ms, nghĩa là LED sẽ chớp tắt nhanh với tần số 5 lần/giây.</li>
+        <p>Bạn chỉ cần copy code này vào Arduino IDE, chọn đúng board ESP8266 mình đang dùng, và upload là LED onboard sẽ chớp liên tục mỗi 100ms.</p>
+
+      </div>
+      
+    </div>
+  </div>
+
+  <script src="main.js"></script>
 </body>
 </html>

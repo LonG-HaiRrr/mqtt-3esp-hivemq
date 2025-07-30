@@ -566,32 +566,95 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
+
 document.addEventListener('DOMContentLoaded', function () {
   const modal = document.getElementById('myModal');
   const openBtn = document.getElementById('openDialog');
   const closeBtn = document.getElementById('closeModal');
+  const copyBtn = document.getElementById('copyCodeBtn');
+  const codeBlock = document.getElementById('codeBlock');
 
-  // Mở modal khi click vào openDialog
+  const btnEsp32 = document.getElementById('btn_esp32');
+  const btnEsp8266 = document.getElementById('btn_esp8266');
+
+  // Hai đoạn code ví dụ
+  const code_esp8266 = `// Ví dụ bật tắt LED ESP8266
+#define LED  LED_BUILTIN
+
+void setup() {
+  pinMode(LED, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(LED, LOW);   // Bật LED
+  delay(100);
+  digitalWrite(LED, HIGH);  // Tắt LED
+  delay(100);
+}
+`;
+  const code_esp32 = `// Ví dụ bật tắt LED ESP32
+#define LED  2
+
+void setup() {
+  pinMode(LED, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(LED, HIGH);  // Bật LED
+  delay(100);
+  digitalWrite(LED, LOW);   // Tắt LED
+  delay(100);
+}
+`;
+
+  // Mở modal
   openBtn.addEventListener('click', function(event) {
     event.preventDefault();
-    modal.style.display = 'flex';
+    modal.classList.add('show');
   });
 
-  // Đóng modal khi click nút Đóng
-  if (closeBtn) {
-    closeBtn.addEventListener('click', function() {
-      modal.style.display = 'none';
-    });
-  }
+  // Đóng modal
+  closeBtn.addEventListener('click', function() {
+    modal.classList.remove('show');
+  });
 
-  // Đóng modal khi click ra ngoài .modal-content
+  // Đóng khi click ngoài nội dung modal
   modal.addEventListener('click', function(event) {
     if (event.target === modal) {
-      modal.style.display = 'none';
+      modal.classList.remove('show');
     }
   });
-});
 
+  // Copy code
+  copyBtn.addEventListener('click', function() {
+    const code = codeBlock.innerText;
+    navigator.clipboard.writeText(code).then(function() {
+      copyBtn.innerText = "✅ Đã copy!";
+    }).catch(function() {
+      copyBtn.innerText = "Lỗi copy!";
+    });
+    setTimeout(()=>{
+      copyBtn.innerText = "📋 Sao chép";
+    }, 1500);
+  });
+
+  // Nút chọn ESP8266
+  btnEsp8266.addEventListener('click', function() {
+    codeBlock.innerText = code_esp8266;
+    btnEsp8266.classList.add('active');
+    btnEsp32.classList.remove('active');
+  });
+
+  // Nút chọn ESP32
+  btnEsp32.addEventListener('click', function() {
+    codeBlock.innerText = code_esp32;
+    btnEsp32.classList.add('active');
+    btnEsp8266.classList.remove('active');
+  });
+
+  // Mặc định hiện ESP8266
+  btnEsp8266.classList.add('active');
+});
 
 
 
