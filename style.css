@@ -19,8 +19,6 @@
   .on { background-color: #397d5f!important; color: #fff!important;}
   .off{ background: #a53434!important; color:#fff!important;}
   .led-label { margin: 0 15px 0 0; display: inline-block; width: 120px; text-align: right;}
-  @media (max-width:700px){ .led-label{width:80px;} #states span{display:block;margin:8px auto;}}
-
   #ts-info {position: relative; top: 18px; left: 22px; text-align: left; font-size: 16px; color: #b9c1cc;background: rgba(25, 27, 34, 0.93);padding: 10px 22px 10px 16px; border-radius: 12px;z-index: 999;max-width: 285px;}
   .ts-info-label {color: #c3cade;} .ts-info-value {font-weight: 600;}
 /* chỉnh lại giao diện 27/07/2025 */
@@ -203,7 +201,8 @@ padding-right: 90px;
 .callme {
   /* padding-right: 75px; */
   transform: scale(1.7);
-  padding: 0 30px 0 30px !important;
+  padding: 0 30px 0 0 !important;
+  margin: 0 0 0 0 !important;
 }
   body {
     font-size: 14px;
@@ -212,7 +211,7 @@ padding-right: 90px;
 
   .infor_container {
     transform: scale(1.7);
-  padding: 0 30px 0 30px !important;
+  padding: 0 60px 0 30px !important;
   }
   #ts-info {    /* drop box của chữ i*/
     position: fixed;
