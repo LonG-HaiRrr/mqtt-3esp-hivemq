@@ -318,11 +318,14 @@ padding-right: 90px;
     width: auto !important;
     text-align: center !important;
   }
-
+  .btn-bat{
+    color: yellow !important;
+    margin: 15px;
+  }
   #states {
     display: block !important;
     justify-content: space-between;
-    margin: 4px 0;
+    margin: 20px 0;
   }
 
 .dropdown-menu1 {
