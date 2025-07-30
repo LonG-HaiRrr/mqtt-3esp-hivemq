@@ -566,6 +566,31 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+  const modal = document.getElementById('myModal');
+  const openBtn = document.getElementById('openDialog');
+  const closeBtn = document.getElementById('closeModal');
+
+  // Mở modal khi click vào openDialog
+  openBtn.addEventListener('click', function(event) {
+    event.preventDefault();
+    modal.style.display = 'flex';
+  });
+
+  // Đóng modal khi click nút Đóng
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function() {
+      modal.style.display = 'none';
+    });
+  }
+
+  // Đóng modal khi click ra ngoài .modal-content
+  modal.addEventListener('click', function(event) {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+});
 
 
 
