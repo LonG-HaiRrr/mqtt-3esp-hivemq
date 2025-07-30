@@ -56,8 +56,13 @@
       <i class="fa-brands fa-facebook fa-xl"style="margin-right: 6px;"></i>
       Facebook</a>
 
-    <a href="tel:1234567890 đây đ phải số t" >
-      Gọi điện
+    <a href="tel:1234567890" >
+      <i class="fa-solid fa-phone-volume fa-lg" style="margin-right: 6px"> </i>
+      Gọi cailongi
+    </a>
+    <a href="tel:1234567890" >
+      <i class="fa-solid fa-code fa-lg" style="margin-right: 6px"> </i>
+      code testesp
     </a>
   </div>
 </div>
@@ -79,7 +84,7 @@
 </div>
 </header>
 
-<h2 class="ahihi">ESP8266 + MQTT HiveMQ 20</h2>
+<h2 class="ahihi">ESP8266 + MQTT HiveMQ ver </h2>
 
 
 
@@ -119,36 +124,66 @@
 
 
 
-<div class="zone_esp1">
+
+  <div class="zone_esp1">
+
+</div>
+
+
+<div class="effect1">
+  <fieldset class="group-box">
+    <legend>ESP 1</legend>
+    <div class="zone_esp1">
   <button id="btn1" class="btn btn-bat" onclick="toggleButton(0)">BẬT LED 1</button>
-<button id="btn2" class="btn btn-bat" onclick="toggleButton(1)">BẬT LED 2</button>
-<button id="btn3" class="btn btn-bat" onclick="toggleButton(2)">BẬT LED 3</button>
-<div id="states">
-  <span class="span_trang_thai"><span class="led-label">LED 1:</span><span id="state1" class="state-indicator off">OFF</span></span>
-  <span class="span_trang_thai"><span class="led-label">LED 2:</span><span id="state2" class="state-indicator off">OFF</span></span>
-  <span class="span_trang_thai"><span class="led-label">LED 3:</span><span id="state3" class="state-indicator off">OFF</span></span>
-</div>
+  <button id="btn2" class="btn btn-bat" onclick="toggleButton(1)">BẬT LED 2</button>
+  <button id="btn3" class="btn btn-bat" onclick="toggleButton(2)">BẬT LED 3</button>
+  <div id="states">
+    <span class="span_trang_thai"><span class="led-label">LED 1:</span><span id="state1" class="state-indicator off">OFF</span></span>
+    <span class="span_trang_thai"><span class="led-label">LED 2:</span><span id="state2" class="state-indicator off">OFF</span></span>
+    <span class="span_trang_thai"><span class="led-label">LED 3:</span><span id="state3" class="state-indicator off">OFF</span></span>
+  </div>
+    </div>
+</fieldset>
 </div>
 
-<div class="zone_esp2">
+
+<div class="effect2">
+  <fieldset class="group-box">
+    <legend>ESP 2</legend>
+    <div class="zone_esp2">
 <button id="btn4" class="btn btn-bat" onclick="toggleButton(3)">BẬT LED 4</button>
 <button id="btn5" class="btn btn-bat" onclick="toggleButton(4)">BẬT LED 5</button>
 <button id="btn6" class="btn btn-bat" onclick="toggleButton(5)">BẬT LED 6</button>
 <!-- Hiển thị trạng thái LED 4, 5, 6 -->
+ <div id="states">
 <span class="span_trang_thai"><span class="led-label">LED 4:</span><span id="state4" class="state-indicator off">OFF</span></span>
 <span class="span_trang_thai"><span class="led-label">LED 5:</span><span id="state5" class="state-indicator off">OFF</span></span>
 <span class="span_trang_thai"><span class="led-label">LED 6:</span><span id="state6" class="state-indicator off">OFF</span></span>
+ </div>
 <!-- Nút điều khiển LED 4, 5, 6 -->
 </div>
+</fieldset>
+</div>
 
-<div class="zone_esp3">
+
+<div class="effect3">
+<fieldset class="group-box">
+    <legend>ESP 3</legend>
+   <div class="zone_esp3">
 <button id="btn7" class="btn btn-bat" onclick="toggleButton(6)">BẬT LED 7</button>
 <button id="btn8" class="btn btn-bat" onclick="toggleButton(7)">BẬT LED 8</button>
 <button id="btn9" class="btn btn-bat" onclick="toggleButton(8)">BẬT LED 9</button>
-<span class="span_trang_thai"><span class="led-label">LED 7:</span><span id="state7" class="state-indicator off">OFF</span></span>
+<div id="states">
+  <span class="span_trang_thai"><span class="led-label">LED 7:</span><span id="state7" class="state-indicator off">OFF</span></span>
 <span class="span_trang_thai"><span class="led-label">LED 8:</span><span id="state8" class="state-indicator off">OFF</span></span>
 <span class="span_trang_thai"><span class="led-label">LED 9:</span><span id="state9" class="state-indicator off">OFF</span></span>
 </div>
+</div>
+</fieldset>
+</div>
+
+
+
 
 
 
