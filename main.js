@@ -542,3 +542,28 @@ window.addEventListener('DOMContentLoaded', function() {
   showZone('all');
 });
 
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Chỉ áp dụng khi màn hình nhỏ hơn 1000px
+  if (window.innerWidth <= 1000) {
+    var inforBox = document.querySelector('.infor_container');
+    if (inforBox) {
+      inforBox.addEventListener('click', function(e) {
+        // Toggle class active
+        inforBox.classList.toggle('active');
+        // Nếu lỡ bấm từ <i> hoặc con bên trong thì tránh bubble
+        e.stopPropagation();
+      });
+      // Bấm ra ngoài thì ẩn đi (option tốt hơn UX)
+      document.addEventListener('click', function(e){
+        if (!inforBox.contains(e.target)) {
+          inforBox.classList.remove('active');
+        }
+      });
+    }
+  }
+});
+
+
