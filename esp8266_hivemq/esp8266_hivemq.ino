@@ -3,11 +3,11 @@
 #include <ArduinoJson.h>
 
 // WiFi info
-// const char* ssid = "TP-LINK_6B6C";
-// const char* password = "07567902";
+const char* ssid = "TP-LINK_6B6C";
+const char* password = "07567902";
 
-const char* ssid = "cuongbeo155";
-const char* password = "123456789";
+// const char* ssid = "cuongbeo155";
+// const char* password = "123456789";
 
 // MQTT info (HiveMQ Cloud)
 const char* mqtt_server = "3e126851189a4b7d9ae59215d2ab14b7.s1.eu.hivemq.cloud";

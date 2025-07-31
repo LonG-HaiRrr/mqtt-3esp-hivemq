@@ -57,8 +57,8 @@ setInterval(() => {
 
 // Thêm ngay trên hoặc trước phần xử lý MQTT message
 const discordWebhook1 = 'https://discord.com/api/webhooks/1400405161100181634/nj4uDdwLHwjYGaBSU30RFoowraXtYOX0kFZPnMb4j8WlRb1Wq0-kaOhkwO_Xw8R72s-6';    // webhook normal #1
-const discordWebhook2 = 'https://discord.com/api/webhooks/1400405392315383911/MZAU5W7ozr--JZM-hiD31SpQIVOLAqHQlsiFpO-zesz7PukD07zhsbICDvxqA4oq142E';    // webhook normal #2
-const discordWebhook3 = 'https://discord.com/api/webhooks/1400405377870467092/X3Z_70MNhchiywPysxzQqdCgh7KMFL0ZsWE4SqGeh8zn0djbWzek19svnpjvcr9_Gglt';    // webhook normal #3
+const discordWebhook2 = 'https://discord.com/api/webhooks/1400407792333885490/D3YP1xC7MrF6XmEgEaTzjp9rxQFGDxP9n8vZ20pm-lyjGVo1FySNJHT4O4VKG14KBMeK';    // webhook normal #2
+const discordWebhook3 = 'https://discord.com/api/webhooks/1400407955928514570/sf9tUGY0C7Hw7NBH1xzdEne6NhRm-TcH5XtWZ1ueiYadd1pwoXcp5kxD92yowN1i_Y4f';    // webhook normal #3
 const discordWebhook4 = 'https://discord.com/api/webhooks/1400405560477618216/uO61BLroKFHayND55fR7A1UrQWApZSKV_j6FRqucaeNwEhrj4iWa02b9sSTusL1Ce5Qi';    // webhook cảnh báo >3 lần 30s
 
 
