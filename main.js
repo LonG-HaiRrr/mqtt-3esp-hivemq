@@ -653,7 +653,6 @@ void loop() {
   });
 
   // Mặc định hiện ESP8266
-  btnEsp8266.classList.add('active');
 });
 
 

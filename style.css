@@ -331,7 +331,10 @@ padding-right: 90px;
 .dropdown-menu1 {
   left: -5px !important;
 }
-
+.modal-content {
+  width: 800px;
+  height: 1300px !important;
+}
 }
 
 /* chỉnh lại giao diện 25/07/2025 */
