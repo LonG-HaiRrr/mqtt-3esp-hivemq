@@ -55,6 +55,51 @@ setInterval(() => {
   document.getElementById('mqtt-time').textContent = now.toLocaleTimeString('vi-VN', { hour12: false });
 }, 1000);
 
+// Thêm ngay trên hoặc trước phần xử lý MQTT message
+const discordWebhook1 = 'https://discord.com/api/webhooks/1400405161100181634/nj4uDdwLHwjYGaBSU30RFoowraXtYOX0kFZPnMb4j8WlRb1Wq0-kaOhkwO_Xw8R72s-6';    // webhook normal #1
+const discordWebhook2 = 'https://discord.com/api/webhooks/1400405392315383911/MZAU5W7ozr--JZM-hiD31SpQIVOLAqHQlsiFpO-zesz7PukD07zhsbICDvxqA4oq142E';    // webhook normal #2
+const discordWebhook3 = 'https://discord.com/api/webhooks/1400405377870467092/X3Z_70MNhchiywPysxzQqdCgh7KMFL0ZsWE4SqGeh8zn0djbWzek19svnpjvcr9_Gglt';    // webhook normal #3
+const discordWebhook4 = 'https://discord.com/api/webhooks/1400405560477618216/uO61BLroKFHayND55fR7A1UrQWApZSKV_j6FRqucaeNwEhrj4iWa02b9sSTusL1Ce5Qi';    // webhook cảnh báo >3 lần 30s
+
+
+async function sendDiscordWebhook(webhookUrl, message) {
+  try {
+    const res = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content: message })
+    });
+    if (!res.ok) {
+      console.error(`Lỗi gửi webhook Discord: ${res.status} ${res.statusText}`);
+    }
+  } catch (e) {
+    console.error('Lỗi gửi webhook Discord:', e);
+  }
+}
+
+async function handleButtonPress(deviceId) {
+  const normalMsg = `${deviceId.toUpperCase()} đã bấm nút`;
+
+  // Gửi thông báo bình thường tới 3 webhook Discord đầu
+  await Promise.all([
+    sendDiscordWebhook(discordWebhook1, normalMsg),
+    sendDiscordWebhook(discordWebhook2, normalMsg),
+    sendDiscordWebhook(discordWebhook3, normalMsg)
+  ]);
+
+  // Đếm số lần bấm trong 30s từ buttonHistory (bạn đã có rồi)
+  const now = Date.now();
+  const count30s = (buttonHistory[deviceId] || []).filter(item => now - (item.ts || 0) < 30000).length;
+
+  if (count30s > 3) {
+    // Gửi cảnh báo qua webhook thứ 4
+    const alertMsg = `⚠️ CẢNH BÁO: ${deviceId.toUpperCase()} đã bấm hơn 3 lần trong 30 giây! Tổng: ${count30s} lần`;
+    await sendDiscordWebhook(discordWebhook4, alertMsg);
+
+    // TODO: Ở đây bạn có thể bổ sung gọi hàm gửi Messenger hoặc Zalo nếu có
+  }
+}
+
 mqtt_client.on('message', function (topic, message) {
   const msgStr = message.toString();
   if (topic.startsWith(topic_status_base)) {
@@ -95,6 +140,7 @@ mqtt_client.on('message', function (topic, message) {
       millis: parsed.millis || 0
     });
     if (buttonHistory[deviceId].length > 10) buttonHistory[deviceId].pop();
+    handleButtonPress(deviceId);
 
     // Gán timestamp thực và textTime (dùng cho thống kê 30s & note)
     let nowTS = now.getTime();
