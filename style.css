@@ -501,7 +501,7 @@ padding-right: 90px;
 
 
 .ahihi { /* giao diện web : để nó k mất chữ do thanh header */
-  padding-top: 100px;
+  padding-top: 60px;
 }
 /* Dropdown menu cho callme */
 .callme {
@@ -699,7 +699,7 @@ body.light-mode #button-history-table tr:hover td {
 .group-box3 {
     border: 2px solid #444647;
     border-radius: 8px;
-    margin: 100px auto 100px auto;
+    margin: 50px auto 50px auto;
     padding: 20px 20px 10px 20px;
     position: relative;
     background: #163e06;
