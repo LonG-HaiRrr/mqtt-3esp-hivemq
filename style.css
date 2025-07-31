@@ -971,3 +971,42 @@ code {
 }
 
 
+
+
+
+/* Modal MQTT mặc định ẩn */
+#modalMQTT {
+  display: none;
+  position: fixed; top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.8);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+#modalMQTT.show { display: flex; }
+/* Nội dung modal */
+.modal-content-mqtt {
+  background: #14192ed2; /* hoặc #fff nếu sáng */
+  padding: 28px 24px 16px 24px;
+  border-radius: 10px;
+  max-width: 580px;
+  min-width: 260px;
+  color: #fff;
+  position: relative;
+  min-height: 80px;
+  box-shadow: 0 0 15px #17275aBB;
+}
+body.light-mode .modal-content-mqtt {
+  background: #f4f7ff;
+  color: #111;
+}
+/* Nút đóng modal */
+.close-modal-mqtt {
+  position: absolute; right: 14px; top: 11px;
+  font-size: 24px; background: none; color: #a2559d;
+  border: none; cursor: pointer;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+.close-modal-mqtt:hover { color: #ff3b3b; }

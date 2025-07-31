@@ -65,6 +65,10 @@
       code test esp
     </a>
 
+    <a href="#" id="openDialog2">
+      <i class="fa-solid fa-brain fa-lg" style="margin-right: 6px"></i>
+      MQTT là gì ?
+    </a>
 
 
   </div>
@@ -87,7 +91,7 @@
 </div>
 </header>
 
-<h2 class="ahihi">ESP8266 + MQTT HiveMQ ver 1.2 </h2>
+<h2 class="ahihi">ESP8266 + MQTT HiveMQ ver 1.21 </h2>
 
 
 
@@ -243,13 +247,9 @@
           <button id="btn_esp32">ESP32</button>
           <button id="btn_esp8266">ESP8266</button>
         </div>
-      
-    
-        </div>
-
+      </div>
       <div class="noidung_modal">
         <p>Dưới đây là một đoạn mã đơn giản để <strong>bật/tắt LED onboard trên các ESP tương ứng</strong> mỗi 100ms. LED onboard thường được gắn với <strong>GPIO2</strong> (hoặc D4 trên NodeMCU).</p>
-
         <h3>🧠 <strong>Mục tiêu:</strong></h3>
         <ul>
           <li>Bật/tắt LED onboard mỗi 100ms.</li>
@@ -272,6 +272,20 @@
       
     </div>
   </div>
+
+  <div id="modalMQTT" class="mqtt-modal">
+  <div class="modal-content-mqtt">
+    <button id="closeModalMQTT" class="close-modal-mqtt">&times;</button>
+        <div class="select-chip">
+          <button id="btn_mqtt">MQTT</button>
+          <button id="btn_websever">btn_websever</button>
+        </div>
+<code id="codeBlock2" class="cpp">
+        mqtt là 1 giao thức kết nối chip và web
+</code>
+  </div>
+</div>
+
 
   <script src="main.js"></script>
 </body>

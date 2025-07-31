@@ -652,8 +652,69 @@ void loop() {
     btnEsp8266.classList.remove('active');
   });
 
-  // Mặc định hiện ESP8266
 });
 
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  const modalMQTT = document.getElementById('modalMQTT');
+  const openBtn2 = document.getElementById('openDialog2');
+  const closeBtn2 = document.getElementById('closeModalMQTT');
+  const codeBlock2 = document.getElementById('codeBlock2');
+  const btn_mqtt = document.getElementById('btn_mqtt');
+  const btn_websever = document.getElementById('btn_websever');
+    const thongtin_mqtt = `// Ví dụ bật tắt LED ESP8266
+#define LED  LED_BUILTIN
+
+void setup() {
+  pinMode(LED, OUTPUT);
+}
+
+cai lon 
+ghihi
+ gi
+}
+`;
+  const thongtin_websever = `// Ví dụ bật tắt LED ESP32
+#define LED  2
+
+void setup() {
+có cái lòn web
+}
+`;
+  if (openBtn2 && modalMQTT) {
+    openBtn2.addEventListener('click', function(event) {
+      event.preventDefault();
+      modalMQTT.classList.add('show');
+    });
+  }
+
+  if (closeBtn2 && modalMQTT) {
+    closeBtn2.addEventListener('click', function() {
+      modalMQTT.classList.remove('show');
+    });
+  }
+
+  // Đóng khi click ngoài vùng modal-content-mqtt
+  if (modalMQTT) {
+    modalMQTT.addEventListener('click', function(event) {
+      if (event.target === modalMQTT) {
+        modalMQTT.classList.remove('show');
+      }
+    });
+  }
+
+  btn_mqtt.addEventListener('click', function() {
+    codeBlock2.innerText = thongtin_mqtt;
+    btn_mqtt.classList.add('active');
+    btn_websever.classList.remove('active');
+  });
+  btn_websever.addEventListener('click', function() {
+    codeBlock2.innerText = thongtin_websever;
+    btn_websever.classList.add('active');
+    btn_mqtt.classList.remove('active');
+  });
+
+});
 
 
