@@ -339,7 +339,7 @@ padding-right: 90px;
 .group-box1::after, .group-box1::before, 
 .group-box2::after, .group-box2::before,
 .group-box3::after, .group-box3::before {
-  padding: 9px !important;
+  padding: 19px !important;
     filter: blur(0px) !important;
   opacity: 1 !important;
 }
