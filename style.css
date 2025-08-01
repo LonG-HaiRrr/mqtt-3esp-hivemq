@@ -335,11 +335,13 @@ padding-right: 90px;
   width: 800px;
   height: 1300px !important;
 }
-
+.noidung_modal {
+  font-size: 25px;
+}
 .group-box1::after, .group-box1::before, 
 .group-box2::after, .group-box2::before,
 .group-box3::after, .group-box3::before {
-  padding: 19px !important;
+  padding: 9px !important;
     filter: blur(0px) !important;
   opacity: 1 !important;
 }
@@ -908,7 +910,6 @@ body.light-mode .group-box3 .group-title  {
   align-items: center;
   margin-bottom: 6px;
 }
-
 .select-chip button {
   margin-right: 10px;
   padding: 7px 17px;
@@ -920,6 +921,12 @@ body.light-mode .group-box3 .group-title  {
   font-weight: 600;
   transition: background .2s;
   font-size: 20px;
+}
+.mqtt-modal button {
+  color: #00ff99;
+  padding: 7px;
+  margin-bottom:10px ;
+  font-size: 17px;
 }
 
 .select-chip button.active,

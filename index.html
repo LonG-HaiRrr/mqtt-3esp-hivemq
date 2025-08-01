@@ -82,6 +82,8 @@
     <div><span class="ts-info-label">Giao thức:</span> <span class="ts-info-value">MQTT (HiveMQ)</span></div>
     <div><span class="ts-info-label">Thời gian:</span> <span class="ts-info-value" id="mqtt-time">--</span></div>
     <div><span class="ts-info-label">Trạng thái MQTT:</span> <span class="ts-info-value" id="mqtt-status">--</span></div>
+    <div><span class="ts-info-label">Thông báo qua:</span> <span class="ts-info-value">Discord</span></div>
+  
   </div>
 </div>
 
@@ -91,7 +93,7 @@
 </div>
 </header>
 
-<h2 class="ahihi">ESP8266 + MQTT HiveMQ ver 1.27</h2>
+<h2 class="ahihi">ESP8266 + MQTT HiveMQ ver 1.272</h2>
 
 
 <!-- tham khảo tại https://www.coding2go.com/border-animation/ -->
@@ -237,16 +239,17 @@
     </div>
   </div>
 
-  <div id="modalMQTT" class="mqtt-modal">
-  <div class="modal-content-mqtt">
+<div id="modalMQTT" class="mqtt-modal">
+  <div class="modal-content">
     <button id="closeModalMQTT" class="close-modal-mqtt">&times;</button>
-        <div class="select-chip">
-          <button id="btn_mqtt">MQTT</button>
-          <button id="btn_websever">btn_websever</button>
-        </div>
-<code id="codeBlock2" class="cpp">
-        mqtt là 1 giao thức kết nối chip và web
-</code>
+    <div class="select-chip">
+      <button id="btn_tomtat">tóm tắt</button>
+      <button id="btn_mqtt">MQTT</button>
+      <button id="btn_websever">websever</button>
+    </div>
+    <code id="codeBlock2" class="cpp">
+            mqtt là 1 giao thức kết nối chip và web
+    </code>
   </div>
 </div>
 
