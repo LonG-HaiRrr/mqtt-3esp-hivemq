@@ -1034,6 +1034,8 @@ body.light-mode .modal-content-mqtt {
   cursor: pointer;            /* Biến chuột thành bàn tay */
   font-weight: bold;          /* Đậm hơn tí cho nổi */
   font-size: 20px;
+
+
 }
 .neuchuahieu_textfrom_js:hover {
   color: #1aff00;             /* Khi hover đổi sang xanh */

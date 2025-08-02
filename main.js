@@ -725,7 +725,9 @@ ghihi
 const thongtin_websever = `
 
 <div class="esp-connection-methods">
-  <h2>🔌 TỔNG HỢP CÁC PHƯƠNG PHÁP KẾT NỐI ĐỂ ĐIỀU KHIỂN <span style="color:#0070f3;">ESP32</span></h2>
+<h6 style="text-align: right;">nội dung được tham khảo từ ChatGPT</h6>
+<h1 style = "text-align: center;">🔌 TỔNG HỢP 🔌</h1>
+  <h2 style = "text-align: center;"> CÁC PHƯƠNG PHÁP KẾT NỐI ĐỂ ĐIỀU KHIỂN <span style="color:#0070f3;">ESP32/ESP8266</span></h2>
 
   <h3>🟢 1. KẾT NỐI QUA MẠNG WI-FI</h3>
   <ul>
