@@ -722,13 +722,85 @@ ghihi
  gi
 }
 `;
-  const thongtin_websever = `// Ví dụ bật tắt LED ESP32
-#define LED  2
+const thongtin_websever = `
 
-void setup() {
-có cái lòn web
-}
+<div class="esp-connection-methods">
+  <h2>🔌 TỔNG HỢP CÁC PHƯƠNG PHÁP KẾT NỐI ĐỂ ĐIỀU KHIỂN <span style="color:#0070f3;">ESP32</span></h2>
+
+  <h3>🟢 1. KẾT NỐI QUA MẠNG WI-FI</h3>
+  <ul>
+    <li><b>MQTT (Message Queue Telemetry Transport):</b> Dùng HiveMQ, Mosquitto,... giao tiếp kiểu <i>publish/subscribe</i>. Nhẹ, nhanh, đa thiết bị.</li>
+    <li><b>HTTP / HTTPS:</b> ESP32 là HTTP client hoặc web server. Kết hợp Thingspeak, Firebase, IFTTT...</li>
+    <li><b>WebSocket:</b> Kết nối 2 chiều real-time. Nhanh hơn HTTP. ESP32 có thể làm server cho web.</li>
+    <li><b>Blynk:</b> App điều khiển ESP32 sẵn. Kết nối qua Internet. Không cần code app.</li>
+    <li><b>Firebase:</b> Dùng database real-time để lưu trạng thái hoặc điều khiển từ xa.</li>
+  </ul>
+
+  <h3>🔵 2. KẾT NỐI BLUETOOTH</h3>
+  <ul>
+    <li><b>Bluetooth Classic (SPP):</b> Giao tiếp Serial qua Bluetooth. Dùng cho app Android điều khiển trực tiếp.</li>
+    <li><b>BLE (Bluetooth Low Energy):</b> Kết nối theo kiểu Service/Characteristic. Tiết kiệm pin hơn.</li>
+  </ul>
+
+  <h3>🟡 3. KẾT NỐI MẠNG NỘI BỘ (LOCAL)</h3>
+  <ul>
+    <li><b>ESP32 Web Server:</b> Truy cập trực tiếp qua IP nội bộ hoặc khi ESP làm AP.</li>
+    <li><b>UDP/TCP Socket:</b> Giao tiếp mạng nội bộ giữa ESP hoặc với máy tính.</li>
+  </ul>
+
+  <h3>🟠 4. KẾT NỐI NGOẠI VI (KHÔNG MẠNG)</h3>
+  <ul>
+    <li><b>UART:</b> Giao tiếp Serial với máy tính hoặc Arduino khác.</li>
+    <li><b>I2C / SPI:</b> Kết nối cảm biến, thiết bị ngoại vi, hoặc các vi điều khiển khác.</li>
+  </ul>
+
+  <h3>🔴 5. KẾT NỐI QUA GSM / LoRa</h3>
+  <ul>
+    <li><b>GSM (SIM800L, A6,...):</b> Gửi dữ liệu qua mạng di động (SMS, HTTP, MQTT).</li>
+    <li><b>LoRa:</b> Giao tiếp khoảng cách xa, không cần Wi-Fi. Phù hợp vùng không có mạng.</li>
+  </ul>
+
+  <h3>🔵 6. ESP-NOW (ĐỘC QUYỀN ESP32)</h3>
+  <ul>
+    <li><b>ESP-NOW:</b> Kết nối nhiều ESP32 trực tiếp, không cần Wi-Fi. Gửi dữ liệu rất nhanh, tiết kiệm năng lượng.</li>
+  </ul>
+
+  <h3>📲 7. KẾT NỐI VỚI APP MOBILE</h3>
+  <ul>
+    <li><b>MIT App Inventor / Flutter / Android Studio:</b> Tự làm app để gửi lệnh qua Wi-Fi, BLE hoặc WebSocket.</li>
+  </ul>
+
+  <h3>📌 BẢNG TỔNG KẾT</h3>
+  <div style="overflow-x: auto;">
+    <table border="1" cellspacing="0" cellpadding="6" style="border-collapse: collapse; min-width: 600px; text-align: center;">
+      <thead style="background-color: #460707ff;">
+        <tr>
+          <th>Phương pháp</th>
+          <th>Mạng</th>
+          <th>Tốc độ</th>
+          <th>Thích hợp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>MQTT</td><td>Wi-Fi / Internet</td><td>⭐⭐⭐⭐☆</td><td>IoT, nhiều thiết bị</td></tr>
+        <tr><td>HTTP / HTTPS</td><td>Wi-Fi / Internet</td><td>⭐⭐⭐☆☆</td><td>Điều khiển đơn giản</td></tr>
+        <tr><td>WebSocket</td><td>Wi-Fi / Local</td><td>⭐⭐⭐⭐⭐</td><td>Real-time, không delay</td></tr>
+        <tr><td>Bluetooth Classic</td><td>Không mạng</td><td>⭐⭐☆☆☆</td><td>App Android trực tiếp</td></tr>
+        <tr><td>BLE</td><td>Không mạng</td><td>⭐⭐☆☆☆</td><td>Tiết kiệm pin, mobile</td></tr>
+        <tr><td>Firebase</td><td>Wi-Fi / Internet</td><td>⭐⭐⭐☆☆</td><td>Lưu trữ + đồng bộ</td></tr>
+        <tr><td>ESP-NOW</td><td>Không mạng</td><td>⭐⭐⭐⭐⭐</td><td>Mạng cảm biến ESP-only</td></tr>
+        <tr><td>GSM / LoRa</td><td>Di động / RF</td><td>⭐⭐☆☆☆</td><td>Nơi không có Wi-Fi</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<img src="3d62d8b7157903d7034c5bb0931e8d27chuy-hieu-hon-chi-hieu-khong.jpg" alt="Bảng tổng kết" width="300" height="400">
+
+<a href="https://chatgpt.com" class="neuchuahieu_textfrom_js" target="_blank">👉Bấm vào đây nếu vẫn chưa hiểu gì👈</a>
+
 `;
+
   const thongtin_tomtat = `Sử dụng HiveMq sẽ nhanh hơn rất nhiều so với ThingSpeak vì kết nối với thingspeak là kết nối giữa esp và http còn với hivemq là kiểu mqtt - truyền nhanh những mẩu data hivemq đóng vai trò là 1 docker - như 1 shiper hoả tốc
 
 \r mqtt là shipper. esp vừa là shop gửi hàng đi và nhận hàng về nếu khách trả hàng . web mình code là khách hàng nhận hàng và trả hàng có nhu cầu
@@ -776,7 +848,8 @@ Ví dụ như shop gửi món hàng qua shipper cho khách, khi khách có nhu c
     btn_tomtat.classList.remove('active');
   });
   btn_websever.addEventListener('click', function() {
-    codeBlock2.innerText = thongtin_websever;
+    codeBlock2.innerHTML = thongtin_websever;    
+
     btn_websever.classList.add('active');
     btn_mqtt.classList.remove('active');
     btn_tomtat.classList.remove('active');

@@ -1026,3 +1026,16 @@ body.light-mode .modal-content-mqtt {
   transition: color 0.2s;
 }
 .close-modal-mqtt:hover { color: #ff3b3b; }
+
+.neuchuahieu_textfrom_js {
+  color: #ffd600;             /* Màu gốc (vàng chanh nổi bật chẳng hạn) */
+  text-decoration: none;      /* Không gạch chân nếu bạn muốn */
+  transition: color 0.2s;     /* Hiệu ứng chuyển màu mượt */
+  cursor: pointer;            /* Biến chuột thành bàn tay */
+  font-weight: bold;          /* Đậm hơn tí cho nổi */
+  font-size: 20px;
+}
+.neuchuahieu_textfrom_js:hover {
+  color: #1aff00;             /* Khi hover đổi sang xanh */
+  text-decoration: underline; /* Có thể muốn gạch chân khi hover */
+}
