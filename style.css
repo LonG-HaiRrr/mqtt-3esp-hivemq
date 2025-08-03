@@ -331,6 +331,9 @@ padding-right: 90px;
 .dropdown-menu1 {
   left: -5px !important;
 }
+.dropdown-menu {
+    top: 50px !important;
+}
 .modal-content {
   width: 800px;
   height: 1300px !important;
@@ -831,7 +834,13 @@ body.light-mode .group-box3 .group-title  {
   font-weight: 800;
   animation: logo-move-right 5s cubic-bezier(0.6, 0, 0.4, 1) forwards;;
   text-decoration: none;
-  cursor: pointer;
+  /* cursor: pointer; */
+}
+.mylogo:hover {
+  color: #16fe01;
+  scale: 1.1;
+  text-shadow: 0 0 25px #16fe01 ;
+  transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
 }
 
 @keyframes logo-move-right {

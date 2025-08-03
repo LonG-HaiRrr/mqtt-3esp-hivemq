@@ -710,17 +710,92 @@ document.addEventListener('DOMContentLoaded', function () {
   const btn_mqtt = document.getElementById('btn_mqtt');
   const btn_websever = document.getElementById('btn_websever');
   const btn_tomtat = document.getElementById('btn_tomtat');
-    const thongtin_mqtt = `// Ví dụ bật tắt LED ESP8266
-#define LED  LED_BUILTIN
+    const thongtin_mqtt = `
 
-void setup() {
-  pinMode(LED, OUTPUT);
-}
+  <h2>🧩 1. MQTT phù hợp hơn với thiết bị IoT</h2>
+  <p>ESP là thiết bị nhỏ, tài nguyên hạn chế. MQTT được thiết kế riêng cho kiểu thiết bị này:</p>
+  <div style="overflow-x: auto;">
+  <table border="1" cellspacing="0" cellpadding="6" style="border-collapse: collapse; min-width: 600px; text-align: center;">
+    <thead style="background-color: #460707ff; color: white;">
+      <tr>
+        <th>Đặc điểm</th>
+        <th>HTTP (gửi trực tiếp web)</th>
+        <th>MQTT</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Giao thức</td>
+        <td>Kết nối mở / đóng từng lần</td>
+        <td>Kết nối giữ liên tục</td>
+      </tr>
+      <tr>
+        <td>Tối ưu tài nguyên</td>
+        <td>Không</td>
+        <td>Có</td>
+      </tr>
+      <tr>
+        <td>Gửi dữ liệu thường xuyên</td>
+        <td>Tốn tài nguyên</td>
+        <td>Rất nhẹ, tiết kiệm pin</td>
+      </tr>
+      <tr>
+        <td>Mạng yếu, mất kết nối</td>
+        <td>Không có xử lý tốt</td>
+        <td>Có retry / queue</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-cai lon 
-ghihi
- gi
-}
+  <p><strong>Kết luận:</strong> MQTT giúp ESP <strong>gửi dữ liệu liên tục, nhẹ nhàng và ổn định hơn</strong>.</p>
+
+  <h2>🔄 2. Phân tách nhiệm vụ rõ ràng</h2>
+  <p>Khi bạn dùng MQTT:</p>
+  <ul>
+    <li><strong>ESP</strong> chỉ lo việc thu thập và gửi dữ liệu.</li>
+    <li><strong>Broker</strong> lo chuyển tiếp dữ liệu đến các subscriber (ví dụ: web server).</li>
+    <li><strong>Web server</strong> chỉ cần lắng nghe hoặc lưu lại dữ liệu từ MQTT.</li>
+  </ul>
+  <p>➡️ Điều này làm cho <strong>kiến trúc dễ mở rộng</strong> và <strong>bảo trì dễ dàng</strong> hơn.</p>
+
+  <h2>📡 3. ESP không phải lúc nào cũng truy cập được Web Server</h2>
+  <p>Nếu bạn host web server <strong>trên internet</strong>:</p>
+  <ul>
+    <li>ESP phải biết domain/IP, mở HTTPS (nặng).</li>
+    <li>Nếu server thay đổi IP, SSL lỗi → ESP phải xử lý phức tạp.</li>
+  </ul>
+  <p>Nếu bạn host <strong>trên mạng LAN</strong>:</p>
+  <ul>
+    <li>ESP gửi được, nhưng web server phải luôn bật.</li>
+    <li>Nếu nhiều ESP gửi cùng lúc, web server có thể quá tải.</li>
+  </ul>
+  <p>Với MQTT, ESP chỉ cần gửi lên một broker, và server có thể xử lý linh hoạt hơn.</p>
+
+  <h2>✅ 4. MQTT hỗ trợ giao tiếp 2 chiều</h2>
+  <p>Bạn muốn từ web điều khiển ESP? MQTT dễ:</p>
+  <ul>
+    <li>Web gửi lệnh → broker → ESP nhận.</li>
+    <li>Không cần polling, không cần ESP phải liên tục hỏi server.</li>
+  </ul>
+
+  <h2>🔧 Khi nào nên gửi <em>trực tiếp từ ESP lên web server</em>?</h2>
+  <p>Bạn có thể bỏ MQTT nếu:</p>
+  <ul>
+    <li>Hệ thống đơn giản: chỉ 1 ESP, 1 web server.</li>
+    <li>Không cần real-time, không cần gửi liên tục.</li>
+    <li>Bạn muốn thiết kế nhanh, ít phụ thuộc.</li>
+  </ul>
+  <p>→ Gửi trực tiếp qua HTTP POST/GET là đơn giản nhất.</p>
+
+  <h2>📌 Tổng kết</h2>
+  <blockquote>
+    <strong>Dùng MQTT là để tối ưu hiệu suất, độ ổn định và khả năng mở rộng của hệ thống IoT.</strong>
+  </blockquote>
+  <p>Nếu bạn chỉ cần gửi dữ liệu đơn giản lên một web server, không cần xử lý phức tạp → có thể bỏ MQTT.</p>
+<img src="you_know.png" width="300" height="400">
+<a href="https://chatgpt.com" class="neuchuahieu_textfrom_js" target="_blank">👉Bấm vào đây nếu vẫn chưa hiểu gì👈</a>
+
 `;
 const thongtin_websever = `
 
@@ -803,17 +878,13 @@ const thongtin_websever = `
 
 `;
 
-  const thongtin_tomtat = `Sử dụng HiveMq sẽ nhanh hơn rất nhiều so với ThingSpeak vì kết nối với thingspeak là kết nối giữa esp và http còn với hivemq là kiểu mqtt - truyền nhanh những mẩu data hivemq đóng vai trò là 1 docker - như 1 shiper hoả tốc
+  const thongtin_tomtat = `----> Sử dụng HiveMq sẽ nhanh hơn rất nhiều so với ThingSpeak vì kết nối với thingspeak là kết nối giữa esp và http còn với hivemq là kiểu mqtt - truyền nhanh những mẩu data hivemq đóng vai trò là 1 docker - như 1 shiper hoả tốc
 
-\r mqtt là shipper. esp vừa là shop gửi hàng đi và nhận hàng về nếu khách trả hàng . web mình code là khách hàng nhận hàng và trả hàng có nhu cầu
+----> mqtt là shipper. esp vừa là shop gửi hàng đi và nhận hàng về nếu khách trả hàng . web mình code là khách hàng nhận hàng và trả hàng có nhu cầu
 
-MQTT như "shipper": Broker MQTT (ở đây là HiveMQ) chỉ có nhiệm vụ nhận gói hàng (message) từ người gửi (publisher) và chuyển tiếp đúng tới người nhận (subscriber), nó không thay đổi nội dung gói hàng. Cũng giống như đơn vị giao hàng đưa nguyên vẹn món hàng từ shop tới khách.
 
-ESP như "shop": Nó vừa là người gửi hàng (publish dữ liệu trạng thái, cảm biến, sự kiện nút bấm lên các topic MQTT), vừa là người nhận hàng trả lại (subscribe các topic nhận lệnh điều khiển từ web hoặc thiết bị khác).
 
-Web bạn code như "khách hàng": Web là client MQTT, nó nhận hàng (subscribe nhận dữ liệu trạng thái, lịch sử nút bấm… từ ESP được chuyển qua HiveMQ) và cũng có thể trả hàng (gửi lệnh điều khiển) (publish các tín hiệu bật tắt LED, lệnh điều khiển… lên MQTT để ESP nhận và thực thi).
-
-Tóm lại, thông qua MQTT broker:
+----> Tóm lại, thông qua MQTT broker:
 
 ESP và web là publisher và subscriber đồng thời, có thể gửi và nhận dữ liệu.
 
@@ -844,7 +915,7 @@ Ví dụ như shop gửi món hàng qua shipper cho khách, khi khách có nhu c
   }
 
   btn_mqtt.addEventListener('click', function() {
-    codeBlock2.innerText = thongtin_mqtt;
+    codeBlock2.innerHTML = thongtin_mqtt;
     btn_mqtt.classList.add('active');
     btn_websever.classList.remove('active');
     btn_tomtat.classList.remove('active');
