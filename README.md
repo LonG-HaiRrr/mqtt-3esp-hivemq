@@ -1,17 +1,14 @@
 <img width="1920" height="1080" alt="Untitled" src="https://github.com/user-attachments/assets/d69c0e8e-dade-4a44-8fee-b87d1c059257" />
 
 
-
+1. tóm tắt
 
 cái này nó sẽ nhanh hơn rất nhiều so với ThingSpeak vì 
   kết nối với thingspeak là kết nối giữa esp và http
   còn với hivemq là kiểu mqtt - truyền nhanh những mẩu data
     hivemq đóng vai trò là 1 docker - như 1 shiper hoả tốc
-.
-.
-.
-.
-.
+
+2. cụ thể hơn chút
 
 mqtt là shipper. esp vừa là shop gửi hàng đi và nhận hàng về nếu khách trả hàng
 . web mình code là khách hàng nhận hàng và trả hàng có nhu cầu
