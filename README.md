@@ -1,4 +1,6 @@
-<img width="1920" height="1080" alt="Untitled" src="https://github.com/user-attachments/assets/d69c0e8e-dade-4a44-8fee-b87d1c059257" />
+<img width="1920" height="1080" alt="Untitled" src="https://github.com/user-attachments/assets/29da56db-9bd5-429c-bc67-dd6c9eab0d12" />
+
+
 
 
 1. tóm tắt
